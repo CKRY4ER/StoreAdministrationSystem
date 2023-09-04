@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  pg:
+    container_name: pg
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: app
+      POSTGRES_DB: store_administration_system   
+    ports:
+      - "5433:5432"
+    volumes:
+      - './data:/var/lib/postgresql/data'
+    healthcheck:
+      test: [ "CMD", "pg_isready -U app" ]
+      start_period: 5s
+      interval: 3s
+      retries: 10
+      timeout: 30s

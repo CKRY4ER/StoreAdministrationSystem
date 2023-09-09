@@ -1,4 +1,6 @@
-﻿namespace StoreAdministrationSystem.Domain.Products;
+﻿using StoreAdministrationSystem.Domain.ProductCategories;
+
+namespace StoreAdministrationSystem.Domain.Products;
 
 public sealed class Product : Aggregate
 {
@@ -7,16 +9,16 @@ public sealed class Product : Aggregate
     public Product(Guid aggregateId, string productName,
         string description, decimal price,
         int count, Uri productPictureUri,
-        IDictionary<string, string> parameters, Guid categoryId)
+        IDictionary<string, string> parameters, ProductCategory productCategory)
             : base(Guid.NewGuid())
     {
         ProductName = productName;
         Description = description;
         Price = price;
         Count = count;
-        ProductPictureUri = productPictureUri;
+        ProductPictureUrl = productPictureUri;
         Parameters = parameters;
-        CategoryId = categoryId;
+        ProductCategory = productCategory;
         CreateDate = UpdateDate = DateTime.UtcNow;
     }
 
@@ -24,9 +26,9 @@ public sealed class Product : Aggregate
     public string Description { get; private set; } = null!;
     public decimal Price { get; private set; }
     public int Count { get; private set; }
-    public Uri ProductPictureUri { get; private set; } = null!;
+    public Uri ProductPictureUrl { get; private set; } = null!;
     public IDictionary<string, string> Parameters { get; private set; } = null!;
-    public Guid CategoryId { get; private set; }
+    public ProductCategory ProductCategory { get; private set; } = null!;
     public DateTimeOffset CreateDate { get; private set; }
     public DateTimeOffset UpdateDate { get; private set; }
 }

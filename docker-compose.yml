@@ -1,6 +1,30 @@
 version: '3.8'
 
 services:
+  store-administration-system-migrator:
+    container_name: store-administration-system-migrator
+    image: store-administration-system-migrator
+    environment:
+      ConnectionStrings:postgres: 
+        Host=pg;Port=5432;
+        Database=store_administration_system;
+        User Id=app;Password=password;
+        Pooling=false;
+        Include Error Detail=true;
+        Application Name=store-administration-system-migrator [pg];
+      Serilog:WriteTo:0:Name: Async
+      Serilog:WriteTo:0:Args:configure:0:Name: Console
+      Serilog:WriteTo:0:Args:configure:0:Args:formatter: Serilog.Formatting.Compact.RenderedCompactJsonFormatter, Serilog.Formatting.Compact
+      Serilog:WriteTo:1:Name: Seq
+      Serilog:WriteTo:1:Args:serverUrl: http://kyc-seq:5341
+      Serilog:WriteTo:1:Args:apiKey: none
+    build:
+      context: .
+      dockerfile: src/StoreAdministrationSystem.Migrator/Dockerfile
+    depends_on:
+      - pg
+
+  #infrastructure
   pg:
     container_name: pg
     image: postgres:latest
@@ -18,3 +42,12 @@ services:
       interval: 3s
       retries: 10
       timeout: 30s
+
+  seq:
+    container_name: seq
+    image: datalust/seq:latest
+    environment:
+      ACCEPT_EULA: Y
+    ports:
+      - "9980:80"
+      - "5341:5341"

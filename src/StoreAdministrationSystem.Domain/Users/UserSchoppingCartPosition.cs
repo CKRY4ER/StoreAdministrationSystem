@@ -1,4 +1,6 @@
-﻿namespace StoreAdministrationSystem.Domain.Users;
+﻿using StoreAdministrationSystem.Domain.Products;
+
+namespace StoreAdministrationSystem.Domain.Users;
 
 public sealed class UserSchoppingCartPosition
 {
@@ -14,4 +16,5 @@ public sealed class UserSchoppingCartPosition
     public Guid ProductId { get; private set; }
     public int ProductCount { get; private set; } 
     public decimal TotalPrice { get; private set; }
+    public Product Product { get; private set; }
 }

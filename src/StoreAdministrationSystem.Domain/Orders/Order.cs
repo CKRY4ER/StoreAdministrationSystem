@@ -10,13 +10,14 @@ public sealed class Order : Aggregate
     {
         UserId = userId;
         TotalPrice = totalPrice;
-        OrderPosition = orderPosition;
+        OrderPositions = orderPosition;
         CreateDate = UpdateDate = DateTimeOffset.UtcNow;
     }
 
     public Guid UserId { get; private set; }
     public decimal TotalPrice { get; private set; }
-    public IEnumerable<OrderPosition> OrderPosition { get; private set; } = null!;
+    public string OrderStatus { get; private set; }
+    public IEnumerable<OrderPosition> OrderPositions { get; private set; } = null!;
     public DateTimeOffset CreateDate { get; private set; }
     public DateTimeOffset UpdateDate { get; private set; }
 }

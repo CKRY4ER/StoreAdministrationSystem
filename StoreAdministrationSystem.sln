@@ -11,11 +11,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreAdministrationSystem.Api", "src\StoreAdministrationSystem.Api\StoreAdministrationSystem.Api.csproj", "{E7830EFB-12C4-44B8-A4B1-CE331E90A2C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreAdministrationSystem.Api", "src\StoreAdministrationSystem.Api\StoreAdministrationSystem.Api.csproj", "{E7830EFB-12C4-44B8-A4B1-CE331E90A2C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreAdministrationSystem.Domain", "src\StoreAdministrationSystem.Domain\StoreAdministrationSystem.Domain.csproj", "{C1F37B4A-89EC-4B35-A628-F5209AF0AD9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreAdministrationSystem.Domain", "src\StoreAdministrationSystem.Domain\StoreAdministrationSystem.Domain.csproj", "{C1F37B4A-89EC-4B35-A628-F5209AF0AD9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreAdministrationSystem.Application", "src\StoreAdministrationSystem.Application\StoreAdministrationSystem.Application.csproj", "{E8E90A3F-B115-4B9E-AC7D-26D64CE30436}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreAdministrationSystem.Application", "src\StoreAdministrationSystem.Application\StoreAdministrationSystem.Application.csproj", "{E8E90A3F-B115-4B9E-AC7D-26D64CE30436}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", "{6997637B-681E-4D85-A278-5357FA34EBAA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreAdministrationSystem.DataAccess", "src\StoreAdministrationSystem.DataAccess\StoreAdministrationSystem.DataAccess.csproj", "{EAADA936-0373-4F76-9CD5-9A63A484BA5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreAdministrationSystem.DataAccess.PostgresSql", "src\StoreAdministrationSystem.DataAccess.PostgresSql\StoreAdministrationSystem.DataAccess.PostgresSql.csproj", "{ADA581CA-5BB4-4D29-AC23-3B5C096D9E9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreAdministrationSystem.Migrator", "src\StoreAdministrationSystem.Migrator\StoreAdministrationSystem.Migrator.csproj", "{B71EB9E8-AE5A-4AA9-83A6-FA0800A1C759}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +43,18 @@ Global
 		{E8E90A3F-B115-4B9E-AC7D-26D64CE30436}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8E90A3F-B115-4B9E-AC7D-26D64CE30436}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8E90A3F-B115-4B9E-AC7D-26D64CE30436}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAADA936-0373-4F76-9CD5-9A63A484BA5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAADA936-0373-4F76-9CD5-9A63A484BA5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAADA936-0373-4F76-9CD5-9A63A484BA5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAADA936-0373-4F76-9CD5-9A63A484BA5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADA581CA-5BB4-4D29-AC23-3B5C096D9E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADA581CA-5BB4-4D29-AC23-3B5C096D9E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADA581CA-5BB4-4D29-AC23-3B5C096D9E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADA581CA-5BB4-4D29-AC23-3B5C096D9E9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B71EB9E8-AE5A-4AA9-83A6-FA0800A1C759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B71EB9E8-AE5A-4AA9-83A6-FA0800A1C759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B71EB9E8-AE5A-4AA9-83A6-FA0800A1C759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B71EB9E8-AE5A-4AA9-83A6-FA0800A1C759}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +63,10 @@ Global
 		{E7830EFB-12C4-44B8-A4B1-CE331E90A2C0} = {DC04C3C3-65D9-40B5-A987-690C0E87F238}
 		{C1F37B4A-89EC-4B35-A628-F5209AF0AD9B} = {DC04C3C3-65D9-40B5-A987-690C0E87F238}
 		{E8E90A3F-B115-4B9E-AC7D-26D64CE30436} = {DC04C3C3-65D9-40B5-A987-690C0E87F238}
+		{6997637B-681E-4D85-A278-5357FA34EBAA} = {DC04C3C3-65D9-40B5-A987-690C0E87F238}
+		{EAADA936-0373-4F76-9CD5-9A63A484BA5E} = {6997637B-681E-4D85-A278-5357FA34EBAA}
+		{ADA581CA-5BB4-4D29-AC23-3B5C096D9E9C} = {6997637B-681E-4D85-A278-5357FA34EBAA}
+		{B71EB9E8-AE5A-4AA9-83A6-FA0800A1C759} = {DC04C3C3-65D9-40B5-A987-690C0E87F238}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F52653CE-0A09-473F-A355-557705D8777E}

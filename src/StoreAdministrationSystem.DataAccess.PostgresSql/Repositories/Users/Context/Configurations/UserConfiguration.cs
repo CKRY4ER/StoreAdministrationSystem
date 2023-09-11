@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using StoreAdministrationSystem.Domain.Users;
-using System.Buffers.Text;
 using System.Text;
 
 namespace StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.Users.Context.Configurations;
@@ -36,6 +35,14 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(p => p.IsAdmin)
             .HasColumnName("is_admin")
+            .IsRequired();
+
+        builder.Property(p => p.CreateDate)
+            .HasColumnName("create_date")
+            .IsRequired();
+
+        builder.Property(p => p.UpdateDate)
+            .HasColumnName("update_date")
             .IsRequired();
 
         builder.HasMany(p => p.Documents)

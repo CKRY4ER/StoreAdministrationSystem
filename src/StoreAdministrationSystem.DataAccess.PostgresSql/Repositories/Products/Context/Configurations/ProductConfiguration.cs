@@ -13,14 +13,14 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.ToTable("products");
 
+        builder.Property<Guid>("ProductCategoryId")
+           .HasColumnName("product_category_id")
+           .IsRequired();
+
         builder.HasKey(p => p.AggregateId);
 
         builder.Property(p => p.AggregateId)
             .HasColumnName("product_id");
-
-        builder.Property<Guid>("ProductCategoryId")
-            .HasColumnName("product_category_id")
-            .IsRequired();
 
         builder.Property(p => p.ProductName)
             .HasColumnName("product_name")
@@ -48,6 +48,7 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(p => p.Parameters)
             .HasColumnName("parameters")
+            .HasColumnType("jsonb")
             .IsRequired()
             .HasConversion(
                 v => JsonSerializer.Serialize(v, new JsonSerializerOptions()),

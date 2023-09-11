@@ -17,8 +17,8 @@ internal class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCa
 
         builder.Property(pc => pc.Name)
             .HasColumnName("name")
-            .IsRequired()
-            .HasMaxLength(256);
+            .HasMaxLength(256)
+            .IsRequired();
 
         builder.Property(pc => pc.CreateDate)
             .IsRequired()

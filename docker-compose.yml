@@ -22,12 +22,13 @@ services:
       context: .
       dockerfile: src/StoreAdministrationSystem.Migrator/Dockerfile
     depends_on:
-      - pg
+      pg:
+        condition: service_healthy
 
   #infrastructure
   pg:
     container_name: pg
-    image: postgres:latest
+    image: postgres:13.3
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: app
@@ -37,17 +38,8 @@ services:
     volumes:
       - './data:/var/lib/postgresql/data'
     healthcheck:
-      test: [ "CMD", "pg_isready -U app" ]
-      start_period: 5s
-      interval: 3s
+      test: ["CMD-SHELL", "pg_isready -U app"]
+      interval: 10s
+      timeout: 5s
       retries: 10
-      timeout: 30s
-
-  seq:
-    container_name: seq
-    image: datalust/seq:latest
-    environment:
-      ACCEPT_EULA: Y
-    ports:
-      - "9980:80"
-      - "5341:5341"
+      start_period: 10s

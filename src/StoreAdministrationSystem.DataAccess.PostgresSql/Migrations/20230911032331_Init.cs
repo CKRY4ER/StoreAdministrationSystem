@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
 {
     /// <inheritdoc />
-    public partial class InitMigration : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                 columns: table => new
                 {
                     order_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     total_price = table.Column<decimal>(type: "numeric", nullable: false),
                     order_status = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     created_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
@@ -24,7 +24,7 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_orders", x => x.order_id);
+                    table.PrimaryKey("pk_orders", x => x.order_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,13 +32,13 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                 columns: table => new
                 {
                     product_category_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     create_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     update_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_product_categories", x => x.product_category_id);
+                    table.PrimaryKey("pk_product_categories", x => x.product_category_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,12 +50,12 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                     login = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     password = table.Column<string>(type: "text", nullable: false),
                     is_admin = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                    create_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    update_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.user_id);
+                    table.PrimaryKey("pk_users", x => x.user_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,17 +68,17 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                     price = table.Column<decimal>(type: "numeric", nullable: false),
                     count = table.Column<int>(type: "integer", nullable: false),
                     product_picture_url = table.Column<string>(type: "text", nullable: false),
-                    parameters = table.Column<string>(type: "text", nullable: false),
-                    ProductCategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    parameters = table.Column<string>(type: "jsonb", nullable: false),
+                    product_category_id = table.Column<Guid>(type: "uuid", nullable: false),
                     create_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     update_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_products", x => x.product_id);
+                    table.PrimaryKey("pk_products", x => x.product_id);
                     table.ForeignKey(
-                        name: "FK_products_product_categories_ProductCategoryId",
-                        column: x => x.ProductCategoryId,
+                        name: "fk_products_product_categories_product_category_id",
+                        column: x => x.product_category_id,
                         principalTable: "product_categories",
                         principalColumn: "product_category_id",
                         onDelete: ReferentialAction.Cascade);
@@ -93,9 +93,9 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user_documents", x => new { x.user_id, x.document_id });
+                    table.PrimaryKey("pk_user_documents", x => new { x.user_id, x.document_id });
                     table.ForeignKey(
-                        name: "FK_user_documents_users_user_id",
+                        name: "fk_user_documents_users_user_id",
                         column: x => x.user_id,
                         principalTable: "users",
                         principalColumn: "user_id",
@@ -106,24 +106,25 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                 name: "order_positions",
                 columns: table => new
                 {
-                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
                     order_id = table.Column<Guid>(type: "uuid", nullable: false),
                     price = table.Column<decimal>(type: "numeric", nullable: false),
                     count = table.Column<int>(type: "integer", nullable: false),
-                    position_price = table.Column<decimal>(type: "numeric", nullable: false)
+                    position_price = table.Column<decimal>(type: "numeric", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_order_positions", x => new { x.order_id, x.ProductId });
+                    table.PrimaryKey("pk_order_positions", x => new { x.order_id, x.product_id });
                     table.ForeignKey(
-                        name: "FK_order_positions_orders_order_id",
+                        name: "fk_order_positions_orders_order_id",
                         column: x => x.order_id,
                         principalTable: "orders",
                         principalColumn: "order_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_order_positions_products_ProductId",
-                        column: x => x.ProductId,
+                        name: "fk_order_positions_product_product_temp_id",
+                        column: x => x.product_id,
                         principalTable: "products",
                         principalColumn: "product_id",
                         onDelete: ReferentialAction.Cascade);
@@ -136,19 +137,19 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                     product_id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     product_count = table.Column<int>(type: "integer", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "numeric", nullable: false)
+                    total_price = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user_schopping_cart_positions", x => new { x.product_id, x.user_id });
+                    table.PrimaryKey("pk_user_schopping_cart_positions", x => new { x.product_id, x.user_id });
                     table.ForeignKey(
-                        name: "FK_user_schopping_cart_positions_products_product_id",
+                        name: "fk_user_schopping_cart_positions_products_product_id",
                         column: x => x.product_id,
                         principalTable: "products",
                         principalColumn: "product_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_user_schopping_cart_positions_users_user_id",
+                        name: "fk_user_schopping_cart_positions_users_user_id",
                         column: x => x.user_id,
                         principalTable: "users",
                         principalColumn: "user_id",
@@ -156,17 +157,17 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_order_positions_ProductId",
+                name: "ix_order_positions_product_id",
                 table: "order_positions",
-                column: "ProductId");
+                column: "product_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_ProductCategoryId",
+                name: "ix_products_product_category_id",
                 table: "products",
-                column: "ProductCategoryId");
+                column: "product_category_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_user_schopping_cart_positions_user_id",
+                name: "ix_user_schopping_cart_positions_user_id",
                 table: "user_schopping_cart_positions",
                 column: "user_id");
         }

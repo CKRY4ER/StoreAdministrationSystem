@@ -15,7 +15,7 @@ internal sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
             .HasColumnName("total_price")
             .IsRequired();
 
-        builder.Property<Guid>("UserId")
+        builder.Property(o => o.UserId)
             .HasColumnName("user_id")
             .IsRequired();
 

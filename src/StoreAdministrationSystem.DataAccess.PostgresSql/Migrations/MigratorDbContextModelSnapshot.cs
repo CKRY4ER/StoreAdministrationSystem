@@ -48,9 +48,11 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .HasColumnName("update_date");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
-                    b.HasKey("AggregateId");
+                    b.HasKey("AggregateId")
+                        .HasName("pk_orders");
 
                     b.ToTable("orders", (string)null);
                 });
@@ -62,7 +64,8 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .HasColumnName("order_id");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("product_id");
 
                     b.Property<int>("Count")
                         .HasColumnType("integer")
@@ -76,9 +79,15 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("price");
 
-                    b.HasKey("OrderId", "ProductId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
-                    b.HasIndex("ProductId");
+                    b.HasKey("OrderId", "ProductId")
+                        .HasName("pk_order_positions");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_order_positions_product_id");
 
                     b.ToTable("order_positions", (string)null);
                 });
@@ -97,13 +106,15 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("name");
 
                     b.Property<DateTimeOffset>("UpdateDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("update_date");
 
-                    b.HasKey("AggregateId");
+                    b.HasKey("AggregateId")
+                        .HasName("pk_product_categories");
 
                     b.ToTable("product_categories", (string)null);
                 });
@@ -131,7 +142,7 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
 
                     b.Property<string>("Parameters")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("jsonb")
                         .HasColumnName("parameters");
 
                     b.Property<decimal>("Price")
@@ -139,7 +150,8 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .HasColumnName("price");
 
                     b.Property<Guid>("ProductCategoryId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("product_category_id");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
@@ -156,9 +168,11 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("update_date");
 
-                    b.HasKey("AggregateId");
+                    b.HasKey("AggregateId")
+                        .HasName("pk_products");
 
-                    b.HasIndex("ProductCategoryId");
+                    b.HasIndex("ProductCategoryId")
+                        .HasDatabaseName("ix_products_product_category_id");
 
                     b.ToTable("products", (string)null);
                 });
@@ -171,7 +185,8 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .HasColumnName("user_id");
 
                     b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("create_date");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -195,9 +210,11 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .HasColumnName("password");
 
                     b.Property<DateTimeOffset>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("update_date");
 
-                    b.HasKey("AggregateId");
+                    b.HasKey("AggregateId")
+                        .HasName("pk_users");
 
                     b.ToTable("users", (string)null);
                 });
@@ -212,7 +229,8 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("document_id");
 
-                    b.HasKey("UserId", "DocumentId");
+                    b.HasKey("UserId", "DocumentId")
+                        .HasName("pk_user_documents");
 
                     b.ToTable("user_documents", (string)null);
                 });
@@ -232,11 +250,14 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .HasColumnName("product_count");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("numeric");
+                        .HasColumnType("numeric")
+                        .HasColumnName("total_price");
 
-                    b.HasKey("ProductId", "UserId");
+                    b.HasKey("ProductId", "UserId")
+                        .HasName("pk_user_schopping_cart_positions");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_user_schopping_cart_positions_user_id");
 
                     b.ToTable("user_schopping_cart_positions", (string)null);
                 });
@@ -247,13 +268,15 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .WithMany("OrderPositions")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_order_positions_orders_order_id");
 
                     b.HasOne("StoreAdministrationSystem.Domain.Products.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_order_positions_product_product_temp_id");
 
                     b.Navigation("Product");
                 });
@@ -264,7 +287,8 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .WithMany()
                         .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_products_product_categories_product_category_id");
 
                     b.Navigation("ProductCategory");
                 });
@@ -275,7 +299,8 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .WithMany("Documents")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_user_documents_users_user_id");
                 });
 
             modelBuilder.Entity("StoreAdministrationSystem.Domain.Users.UserSchoppingCartPosition", b =>
@@ -284,13 +309,15 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_user_schopping_cart_positions_products_product_id");
 
                     b.HasOne("StoreAdministrationSystem.Domain.Users.User", null)
                         .WithMany("ShoppingCartPositions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_user_schopping_cart_positions_users_user_id");
 
                     b.Navigation("Product");
                 });

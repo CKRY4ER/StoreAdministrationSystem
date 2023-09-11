@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     public static void AddPostgresSqlShemaMigrator(this IServiceCollection collectin, string connectionString)
     {
         collectin.AddDbContext<MigratorDbContext>(builder =>
-            builder.UseNpgsql(connectionString));
+            builder.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
         collectin.AddScoped<IStoreAdministrationSystemShemaMigrator, StoreAdministrationSystemShemaMigrator>();
     }
 }

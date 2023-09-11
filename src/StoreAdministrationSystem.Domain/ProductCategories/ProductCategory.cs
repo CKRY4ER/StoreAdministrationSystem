@@ -1,6 +1,4 @@
-﻿using StoreAdministrationSystem.Domain.Products;
-
-namespace StoreAdministrationSystem.Domain.ProductCategories;
+﻿namespace StoreAdministrationSystem.Domain.ProductCategories;
 
 public sealed class ProductCategory : Aggregate
 {

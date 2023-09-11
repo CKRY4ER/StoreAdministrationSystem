@@ -18,5 +18,5 @@ public sealed class OrderPosition
     public decimal Price { get; private set; }
     public int Count { get; private set; }
     public decimal PositionPrice { get; private set; }
-    public Product Product { get; private set; }
+    public Product Product { get; private set; } = null!;
 }

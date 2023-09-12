@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.ProductCategories.Context.Configurations;
+using StoreAdministrationSystem.Domain.ProductCategories;
 
 namespace StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.ProductCategories.Context;
 
@@ -11,4 +12,6 @@ public sealed class ProductCategoriesDbContext : DbContext
 
         base.OnModelCreating(modelBuilder); 
     }
+
+    public DbSet<ProductCategory> ProductCategories { get; set; }
 }

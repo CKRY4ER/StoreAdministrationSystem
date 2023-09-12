@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.Orders.Context.Configurations;
+using StoreAdministrationSystem.Domain.Orders;
 
 namespace StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.Orders.Context;
 
@@ -17,4 +18,6 @@ public sealed class OrderDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
     }
+
+    public DbSet<Order> Orders { get; set; }
 }

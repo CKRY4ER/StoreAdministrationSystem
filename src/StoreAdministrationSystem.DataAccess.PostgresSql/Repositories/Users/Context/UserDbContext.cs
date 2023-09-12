@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.Users.Context.Configurations;
+using StoreAdministrationSystem.Domain.Users;
 
 namespace StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.Users.Context;
 
@@ -13,4 +14,6 @@ public sealed class UserDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
     }
+
+    public DbSet<User> Users { get; set; }
 }

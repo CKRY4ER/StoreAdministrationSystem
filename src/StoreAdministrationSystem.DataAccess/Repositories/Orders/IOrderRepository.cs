@@ -4,5 +4,5 @@ namespace StoreAdministrationSystem.DataAccess.Repositories.Orders;
 
 public interface IOrderRepository : IRepository<Order>
 {
-    Task<Order> GetByIdAsync(Guid orderId, CancellationToken cancellationToken);
+    Task<Order?> GetByIdAsync(Guid orderId, CancellationToken cancellationToken);
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StoreAdministrationSystem.Domain;
+﻿using StoreAdministrationSystem.Domain;
 
 namespace StoreAdministrationSystem.DataAccess.Repositories;
 

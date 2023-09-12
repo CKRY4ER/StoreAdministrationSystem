@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     {
         collection.AddDbContext<IReadModelDbContext, ReadModelDbContext>(builder =>
             builder.UseNpgsql(connectiontring).UseSnakeCaseNamingConvention());
-        collection.AddScoped<IReadModelQueryExecutor, IReadModelQueryExecutor>();
+        collection.AddScoped<IReadModelQueryExecutor, ReadModelQueryExecutor>();
         collection.AddScoped(typeof(IReadModelQueryProvider<>), typeof(ReadModelQueryProvider<>));
     }
 }

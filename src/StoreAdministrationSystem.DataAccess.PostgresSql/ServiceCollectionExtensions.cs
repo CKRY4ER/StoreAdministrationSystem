@@ -40,7 +40,7 @@ public static class ServiceCollectionExtensions
         where TRepositoryImplementation : class, TRepository
         where TDbContext : DbContext
     {
-        collection.AddDbContextFactory<TDbContext>(builder =>
+        collection.AddDbContextPool<TDbContext>(builder =>
             builder.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
 
         collection.AddScoped<TRepository, TRepositoryImplementation>();

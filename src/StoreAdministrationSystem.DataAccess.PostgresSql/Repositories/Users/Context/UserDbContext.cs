@@ -6,6 +6,11 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.Users.Co
 
 public sealed class UserDbContext : DbContext
 {
+    public UserDbContext(DbContextOptions<UserDbContext> options)
+        : base(options)
+    {
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserConfiguration());

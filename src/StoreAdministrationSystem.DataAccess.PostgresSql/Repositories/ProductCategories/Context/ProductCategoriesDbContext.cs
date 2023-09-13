@@ -6,6 +6,11 @@ namespace StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.ProductC
 
 public sealed class ProductCategoriesDbContext : DbContext
 {
+    public ProductCategoriesDbContext(DbContextOptions<ProductCategoriesDbContext> options)
+        : base(options)
+    {
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new ProductCategoryConfiguration());

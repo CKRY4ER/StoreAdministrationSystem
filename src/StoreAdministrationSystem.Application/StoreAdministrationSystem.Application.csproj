@@ -16,4 +16,9 @@
     <ProjectReference Include="..\StoreAdministrationSystem.ReadModel.PostgresSql\StoreAdministrationSystem.ReadModel.PostgresSql.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Framework\QueryComponents\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
 </Project>

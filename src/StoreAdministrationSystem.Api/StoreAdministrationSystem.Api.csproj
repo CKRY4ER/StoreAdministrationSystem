@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\StoreAdministrationSystem.Application\StoreAdministrationSystem.Application.csproj" />
   </ItemGroup>
 

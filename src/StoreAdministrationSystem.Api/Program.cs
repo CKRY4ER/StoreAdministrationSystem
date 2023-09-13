@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpLogging;
 using Hellang.Middleware.ProblemDetails;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Features;
+using StoreAdministrationSystem.Application.Framework;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
@@ -13,6 +14,8 @@ var connectionString = builder.Configuration.GetConnectionString("postgres")!;
 
 builder.Services.AddPostgresSqlRepositories(connectionString);
 builder.Services.AddPostgresSqlReadModel(connectionString);
+
+builder.Services.AddFramework();
 
 builder.Services.AddHttpLogging(options => { options.LoggingFields = HttpLoggingFields.All; });
 

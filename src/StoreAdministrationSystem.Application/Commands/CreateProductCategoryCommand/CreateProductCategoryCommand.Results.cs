@@ -12,7 +12,7 @@ public sealed partial class CreateProductCategoryCommand
     private static Results.FailResult InternalError()
         => new(ApplicationErrorCodes.INTERNAL_ERROR, "Internal error");
 
-    public sealed class Results
+    public static class Results
     {
         public class SuccessResult : ISuccessCommandResult
         {

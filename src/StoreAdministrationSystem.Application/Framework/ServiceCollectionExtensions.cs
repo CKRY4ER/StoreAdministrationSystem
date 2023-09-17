@@ -11,5 +11,6 @@ public static class ServiceCollectionExtensions
         collection.AddMediatR(Assembly.GetExecutingAssembly());
 
         collection.AddScoped<ICommandExecutor, CommandExecutor>();
+        collection.AddScoped<IQueryExecutor, QueryExecutor>();
     }
 }

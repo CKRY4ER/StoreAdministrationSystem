@@ -4,7 +4,7 @@ using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.ReadModel;
 using StoreAdministrationSystem.ReadModel.ProductCategories;
 
-namespace StoreAdministrationSystem.Application.Queries.GetProductCategoriesListQuery;
+namespace StoreAdministrationSystem.Application.Queries.ProductCategories;
 
 public sealed partial class GetProductCategoriesListQuery
 {

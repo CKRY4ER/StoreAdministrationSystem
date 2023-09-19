@@ -14,4 +14,10 @@ public sealed class ProductCategory : Aggregate
     public string Name { get; private set; } = null!;
     public DateTimeOffset CreateDate { get; private set; }
     public DateTimeOffset UpdateDate { get; private set; }
+
+    public void UpdateInformation(string name)
+    {
+        Name = name;
+        UpdateDate = DateTimeOffset.UtcNow;
+    }
 }

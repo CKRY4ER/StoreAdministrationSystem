@@ -5,7 +5,7 @@ using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.ReadModel;
 using StoreAdministrationSystem.ReadModel.ProductCategories;
 
-namespace StoreAdministrationSystem.Application.Queries.GetPagedProductCategoriesListQuery;
+namespace StoreAdministrationSystem.Application.Queries.ProductCategories;
 
 public sealed partial class GetPagedProductCategoriesListQuery
 {

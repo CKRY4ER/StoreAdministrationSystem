@@ -16,4 +16,8 @@
     <ProjectReference Include="..\StoreAdministrationSystem.ReadModel.PostgresSql\StoreAdministrationSystem.ReadModel.PostgresSql.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\Products\GetPagedProductListQuery\" />
+  </ItemGroup>
+
 </Project>

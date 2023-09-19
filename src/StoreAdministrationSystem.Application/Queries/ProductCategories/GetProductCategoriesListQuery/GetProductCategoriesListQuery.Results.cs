@@ -1,11 +1,10 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
-using static StoreAdministrationSystem.Application.Queries.GetProductCategoriesListQuery.GetProductCategoriesListQuery.Results;
 
-namespace StoreAdministrationSystem.Application.Queries.GetProductCategoriesListQuery;
+namespace StoreAdministrationSystem.Application.Queries.ProductCategories;
 
 public sealed partial class GetProductCategoriesListQuery
 {
-    private static Results.SuccessResult Success(IEnumerable<ProductCategoryReference> productCategories)
+    private static Results.SuccessResult Success(IEnumerable<Results.ProductCategoryReference> productCategories)
         => new(productCategories);
 
     private static Results.FailResult NotFound()

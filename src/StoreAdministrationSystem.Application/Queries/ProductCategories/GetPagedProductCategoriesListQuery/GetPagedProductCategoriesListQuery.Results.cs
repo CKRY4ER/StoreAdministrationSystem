@@ -1,11 +1,10 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
-using static StoreAdministrationSystem.Application.Queries.GetPagedProductCategoriesListQuery.GetPagedProductCategoriesListQuery.Results;
 
-namespace StoreAdministrationSystem.Application.Queries.GetPagedProductCategoriesListQuery;
+namespace StoreAdministrationSystem.Application.Queries.ProductCategories;
 
 public sealed partial class GetPagedProductCategoriesListQuery
 {
-    private static Results.SuccessResult Success(Page<ProductCatogoryReference> productCategories)
+    private static Results.SuccessResult Success(Page<Results.ProductCatogoryReference> productCategories)
         => new(productCategories);
 
     public static class Results

@@ -6,18 +6,17 @@ public sealed class Product : Aggregate
 {
     private Product() { }
 
-    public Product(Guid aggregateId, string productName,
-        string description, decimal price,
-        int count, Uri productPictureUri,
+    public Product(string productName,
+        string description, decimal price, Uri productPictureUri,
         IDictionary<string, string> parameters, ProductCategory productCategory)
             : base(Guid.NewGuid())
     {
         ProductName = productName;
         Description = description;
         Price = price;
-        Count = count;
         ProductPictureUrl = productPictureUri;
         Parameters = parameters;
+        Count = 0;
         ProductCategory = productCategory;
         CreateDate = UpdateDate = DateTime.UtcNow;
     }
@@ -31,4 +30,17 @@ public sealed class Product : Aggregate
     public ProductCategory ProductCategory { get; private set; } = null!;
     public DateTimeOffset CreateDate { get; private set; }
     public DateTimeOffset UpdateDate { get; private set; }
+
+    public void UpdateInformation(string productName,
+        string description, decimal price, Uri productPictureUri,
+        IDictionary<string, string> parameters, ProductCategory productCategory)
+    {
+        ProductName = productName;
+        Description = description;
+        Price = price;
+        ProductPictureUrl = productPictureUri;
+        Parameters = parameters;
+        ProductCategory = productCategory;
+        UpdateDate = DateTime.UtcNow;
+    }
 }

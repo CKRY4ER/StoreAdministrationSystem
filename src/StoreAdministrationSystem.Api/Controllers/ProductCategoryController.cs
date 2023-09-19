@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreAdministrationSystem.Application;
-using StoreAdministrationSystem.Application.Commands.CreateProductCategoryProductCommand;
+using StoreAdministrationSystem.Application.Commands.ProductCategories;
 using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.Application.Queries;
-using StoreAdministrationSystem.Application.Queries.GetPagedProductCategoriesListQuery;
-using StoreAdministrationSystem.Application.Queries.GetProductCategoriesListQuery;
+using StoreAdministrationSystem.Application.Queries.ProductCategories;
 using System.ComponentModel.DataAnnotations;
 
 namespace StoreAdministrationSystem.Api.Controllers;
@@ -72,7 +71,7 @@ public class ProductCategoryController : ApiControllerBase
     }
 
     [HttpGet("list")]
-    [ProducesResponseType(typeof(IEnumerable<GetProductCategoriesListQuery.Results.ProductCategoryReference>), 200)]
+    [ProducesResponseType(typeof(GetProductCategoriesListQuery.Results.ProductCategoryReference[]), 200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
@@ -90,6 +89,35 @@ public class ProductCategoryController : ApiControllerBase
             fail => fail.Code switch
             {
                 ApplicationErrorCodes.PRODUCT_CATEGORY_NOT_FOUND => NoContent(),
+                _ => InternalServerError()
+            });
+    }
+
+    [HttpPatch("{categoryId:guid}")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
+    [ProducesErrorResponseType(typeof(ProblemDetails))]
+    public async Task<IActionResult> UpdateProductCategoryAsync(
+        [FromServices] ICommandExecutor commandExecutor,
+        [FromRoute] Guid categoryId,
+        [FromQuery] string name,
+        CancellationToken cancellationToken = default)
+    {
+        var commandResult = await commandExecutor.ExecuteAsync<
+            UpdateProductCategoryCommand,
+            UpdateProductCategoryCommand.Results.SuccessResult,
+            UpdateProductCategoryCommand.Results.FailResult>(new()
+            {
+                ProductCategoryId = categoryId,
+                Name = name,
+            }, cancellationToken);
+
+        return commandResult.Match(
+            success => NoContent(),
+            fail => fail.Code switch
+            {
+                ApplicationErrorCodes.PRODUCT_CATEGORY_NOT_FOUND => NotFound(fail.Code, fail.Message),
                 _ => InternalServerError()
             });
     }

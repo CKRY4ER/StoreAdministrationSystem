@@ -19,6 +19,11 @@ public sealed class ProductRepository : IProductRepository
             .Include(p => p.ProductCategory)
             .FirstOrDefaultAsync(p => p.AggregateId == productId, cancellationToken);
 
+    public async Task<Product?> GetByName(string Name, CancellationToken cancellationToken)
+        => await _context.Products.AsSplitQuery()
+        .Include(p => p.ProductCategory)
+        .FirstOrDefaultAsync(p => p.ProductName == Name);
+
     public async Task SaveAsync(Product aggregate, CancellationToken cancellationToken)
     {
         await _context.AddAsync(aggregate, cancellationToken);

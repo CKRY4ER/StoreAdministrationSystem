@@ -2,30 +2,26 @@
 
 namespace StoreAdministrationSystem.Application.Queries.Products;
 
-public sealed partial class GetProductListQuery
+public sealed partial class GetPagedProductListQuery
 {
-    private static Results.SuccessResult Success(IEnumerable<Results.ProductReference> products)
+    private static Results.SuccessResult Success(Page<Results.ProductReference> products)
         => new(products);
-
-    private static Results.FailResults NotFound()
-        => new(ApplicationErrorCodes.PRODUCT_NOT_FOUND, "Products not found");
-
-    private static Results.FailResults InternalError()
-        => new(ApplicationErrorCodes.INTERNAL_ERROR, "Internal error");
 
     public static class Results
     {
         public class SuccessResult : ISuccessQueryResult
         {
-            public SuccessResult(IEnumerable<ProductReference> products)
-                => Products = products;
+            public SuccessResult(Page<ProductReference> products)
+            {
+                Products = products;
+            }
 
-            public IEnumerable<ProductReference> Products { get; init; } = null!;
+            public Page<ProductReference> Products { get; init; } = null!;
         }
 
-        public class FailResults : IFailQueryResult
+        public class FailResult : IFailQueryResult
         {
-            public FailResults(string code, string message)
+            public FailResult(string code, string message)
             {
                 Code = code;
                 Message = message;
@@ -43,6 +39,8 @@ public sealed partial class GetProductListQuery
             public int Count { get; init; }
             public Guid ProductCategoryId { get; init; }
             public string ProductCategoryName { get; init; } = null!;
+            public DateTimeOffset CreateDate { get; init; }
+            public DateTimeOffset UpdateDate { get; init; }
         }
     }
 }

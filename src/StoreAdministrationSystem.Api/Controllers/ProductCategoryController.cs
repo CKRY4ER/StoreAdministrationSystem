@@ -43,7 +43,7 @@ public class ProductCategoryController : ApiControllerBase
             });
     }
 
-    [HttpPost("create")]
+    [HttpPost()]
     [ProducesResponseType(200)]
     [ProducesResponseType(409)]
     [ProducesResponseType(500)]
@@ -93,7 +93,7 @@ public class ProductCategoryController : ApiControllerBase
             });
     }
 
-    [HttpPatch("{categoryId:guid}")]
+    [HttpPatch("{categoryId:guid}/update")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]

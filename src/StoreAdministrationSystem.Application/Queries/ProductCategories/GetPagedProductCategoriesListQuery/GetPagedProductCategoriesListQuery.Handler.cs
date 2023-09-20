@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using OneOf;
-using OneOf.Types;
 using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.ReadModel;
 using StoreAdministrationSystem.ReadModel.ProductCategories;

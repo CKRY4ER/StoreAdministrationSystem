@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  store-administration-system-api:
+    container_name: store-administration-system-api
+    image: store-administration-system-api
+    environment:
+      ConnectionStrings:postgres:
+        Host=pg;Port=5432;
+        Database=store_administration_system;
+        User Id=app;Password=password;
+        Pooling=true;
+        Minimum Pool Size=5;
+        Maximum Pool Size=30;
+        Include Error Detail=true;
+        Application Name=store-administration-system-api [pg];
+      Serilog:Filter:0:Name: ByExcluding
+      Serilog:Filter:0:Args:expression: RequestPath like '/swagger%'
+      Serilog:Filter:1:Name: ByExcluding
+      Serilog:Filter:1:Args:expression: RequestPath like '%.ico'
+      Serilog:Filter:2:Name: ByExcluding
+      Serilog:Filter:2:Args:expression: RequestPath like '/hc%'
+      Serilog:Filter:3:Name: ByExcluding
+      Serilog:Filter:3:Args:expression: RequestPath like '/health%'
+      Serilog:Filter:4:Name: ByExcluding
+      Serilog:Filter:4:Args:expression: RequestPath like '/metrics%'
+      Serilog:Filter:5:Name: ByExcluding
+      Serilog:Filter:5:Args:expression: RequestPath like '/ping%'
+      Serilog:Filter:6:Name: ByExcluding
+      Serilog:Filter:6:Args:expression: RequestPath like '/api-docs%'
+      Serilog:WriteTo:0:Name: Async
+      Serilog:WriteTo:0:Args:configure:0:Name: Console
+      Serilog:WriteTo:0:Args:configure:0:Args:formatter: Serilog.Formatting.Compact.RenderedCompactJsonFormatter, Serilog.Formatting.Compact
+    build:
+      context: .
+      dockerfile: src/StoreAdministrationSystem.Api/Dockerfile
+    depends_on: 
+      store-administration-system-migrator: 
+        condition: service_completed_successfully
+
+  store-administration-system-migrator:
+    container_name: store-administration-system-migrator
+    image: store-administration-system-migrator
+    environment:
+      ConnectionStrings:postgres: 
+        Host=pg;Port=5432;
+        Database=store_administration_system;
+        User Id=app;Password=password;
+        Pooling=false;
+        Include Error Detail=true;
+        Application Name=store-administration-system-migrator [pg];
+      Serilog:WriteTo:0:Name: Async
+      Serilog:WriteTo:0:Args:configure:0:Name: Console
+      Serilog:WriteTo:0:Args:configure:0:Args:formatter: Serilog.Formatting.Compact.RenderedCompactJsonFormatter, Serilog.Formatting.Compact
+    build:
+      context: .
+      dockerfile: src/StoreAdministrationSystem.Migrator/Dockerfile
+    depends_on:
+      pg:
+        condition: service_healthy
+
+  #infrastructure
+  pg:
+    container_name: pg
+    image: postgres:13.3
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: app
+      POSTGRES_DB: store_administration_system   
+    ports:
+      - "5433:5432"
+    volumes:
+      - './data:/var/lib/postgresql/data'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s

@@ -9,5 +9,6 @@ public sealed class OrderPositionModelItem : IReadModelItem
     public Guid OrderId { get; private set; }
     public Guid ProductId { get; private set; }
     public decimal Price { get; private set; }
+    public int Count { get; private set; }
     public decimal PositionPrice { get; private set; }
 }

@@ -18,6 +18,7 @@ public sealed class UserRepository : IUserRepository
         => await _context.Users.AsSplitQuery()
             .Include(u => u.Documents)
             .Include(u => u.ShoppingCartPositions)
+            .ThenInclude(usc => usc.Product)
             .FirstOrDefaultAsync(u => u.AggregateId == userId, cancellationToken);
 
     public async Task SaveAsync(User aggregate, CancellationToken cancellationToken)

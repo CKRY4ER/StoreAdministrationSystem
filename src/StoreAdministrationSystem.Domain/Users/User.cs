@@ -25,4 +25,10 @@ public sealed class User : Aggregate
     public IEnumerable<UserSchoppingCartPosition> ShoppingCartPositions => _shoppingCartPositions;
     public DateTimeOffset CreateDate { get; private set; }
     public DateTimeOffset UpdateDate { get; private set; }
+
+    public void ClearShoppingCartPosition()
+    {
+        _shoppingCartPositions.Clear();
+        UpdateDate = DateTimeOffset.UtcNow;
+    }
 }

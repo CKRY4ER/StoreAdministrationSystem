@@ -8,5 +8,10 @@ public static class ApplicationErrorCodes
     public const string PRODUCT_ALREADY_EXIST = "product_already_exists";
     public const string PRODUCT_NOT_FOUND = "product_not_found";
 
+    public const string ORDER_NOT_FOUND = "order_not_found";
+
+    public const string USER_SCHOPPING_CART_EMPTY = "user_shopping_cart_empty";
+    public const string USER_NOT_FOUND = "user_not_found";
+
     public const string INTERNAL_ERROR = "internal_error";
 }

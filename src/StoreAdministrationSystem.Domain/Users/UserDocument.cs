@@ -8,4 +8,5 @@ public sealed class UserDocument
         => DocumentId = documentId;
 
     public Guid DocumentId { get; private set; }
+    public string DocumentType { get; init; } = null!;
 }

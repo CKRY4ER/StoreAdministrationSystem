@@ -8,4 +8,5 @@ public sealed class UserDocumentModelItem : IReadModelItem
 
     public Guid UserId { get; private set; }
     public Guid DocumentId { get; private set; }
+    public string DocumentType { get; private set; } = null!;
 }

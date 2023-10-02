@@ -19,5 +19,9 @@ internal sealed class UserDocumentConfiguration : IEntityTypeConfiguration<UserD
 
         builder.Property(ud => ud.DocumentId)
             .HasColumnName("document_id");
+
+        builder.Property(ud => ud.DocumentType)
+            .HasColumnName("document_type")
+            .HasMaxLength(40);
     }
 }

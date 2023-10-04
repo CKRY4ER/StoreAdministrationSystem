@@ -46,12 +46,13 @@ public sealed partial class CreateOrderCommand
 
             foreach(var userShoppingCartPosition in user.ShoppingCartPositions)
             {
-                orderTotalPrice += userShoppingCartPosition.TotalPrice;
+                var userShoppingCartPostionTotalPrice = userShoppingCartPosition.Product.Price * userShoppingCartPosition.ProductCount;
+                orderTotalPrice += userShoppingCartPostionTotalPrice;
 
                 orderPositionList.Add(new(userShoppingCartPosition.ProductId,
                     userShoppingCartPosition.Product.Price,
                     userShoppingCartPosition.ProductCount,
-                    userShoppingCartPosition.TotalPrice));
+                    userShoppingCartPostionTotalPrice));
             }
 
             var order = new Order(user.AggregateId, orderTotalPrice, orderPositionList);

@@ -8,11 +8,9 @@ public sealed class UserSchoppingCartPosition
     {
         ProductId = productId;
         ProductCount = productCount;
-        TotalPrice = totalPrice;
     }
 
     public Guid ProductId { get; private set; }
     public int ProductCount { get; private set; } 
-    public decimal TotalPrice { get; private set; }
     public Product Product { get; private set; } = null!;
 }

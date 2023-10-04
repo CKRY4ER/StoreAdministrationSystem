@@ -21,6 +21,10 @@ public sealed class UserRepository : IUserRepository
             .ThenInclude(usc => usc.Product)
             .FirstOrDefaultAsync(u => u.AggregateId == userId, cancellationToken);
 
+    public async Task<User?> GetByLoginAsync(string login, CancellationToken cancellationToken)
+        => await _context.Users.AsSingleQuery()
+        .FirstOrDefaultAsync(u => u.Login.ToLower() == login.ToLower());
+
     public async Task SaveAsync(User aggregate, CancellationToken cancellationToken)
     {
         await _context.AddAsync(aggregate, cancellationToken);

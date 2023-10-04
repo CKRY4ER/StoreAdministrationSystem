@@ -20,10 +20,6 @@ internal sealed class UserSchoppingCartPositionConfiguration : IEntityTypeConfig
             .HasColumnName("product_id")
             .IsRequired();
 
-        builder.Property(uscp => uscp.TotalPrice)
-            .HasColumnName("total_price")
-            .IsRequired();
-
         builder.Property(uscp => uscp.ProductCount)
             .HasColumnName("product_count");
 

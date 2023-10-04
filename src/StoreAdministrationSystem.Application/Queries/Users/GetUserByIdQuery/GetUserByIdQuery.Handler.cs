@@ -2,6 +2,7 @@
 using OneOf;
 using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.ReadModel;
+using StoreAdministrationSystem.ReadModel.Products;
 using StoreAdministrationSystem.ReadModel.Users;
 
 namespace StoreAdministrationSystem.Application.Queries.Users;
@@ -17,16 +18,19 @@ public sealed partial class GetUserByIdQuery
         private readonly IReadModelQueryProvider<UserModelItem> _userModelProvider;
         private readonly IReadModelQueryProvider<UserSchoppingCartPositionModelItem> _userShoppingCartModelProvider;
         private readonly IReadModelQueryProvider<UserDocumentModelItem> _userDoucmentModelProvider;
+        private readonly IReadModelQueryProvider<ProductModelItem> _productModelProvider;
 
-        public Handler(IReadModelQueryExecutor modelQueryExecutor, 
+        public Handler(IReadModelQueryExecutor modelQueryExecutor,
             IReadModelQueryProvider<UserModelItem> userModelProvider,
             IReadModelQueryProvider<UserSchoppingCartPositionModelItem> userShoppingCartModelProvider,
-            IReadModelQueryProvider<UserDocumentModelItem> userDoucmentModelProvider)
+            IReadModelQueryProvider<UserDocumentModelItem> userDoucmentModelProvider,
+            IReadModelQueryProvider<ProductModelItem> productModelProvider)
         {
             _modelQueryExecutor = modelQueryExecutor;
             _userModelProvider = userModelProvider;
             _userShoppingCartModelProvider = userShoppingCartModelProvider;
             _userDoucmentModelProvider = userDoucmentModelProvider;
+            _productModelProvider = productModelProvider;
         }
 
         public async Task<OneOf<Results.SuccessResult, Results.FailResult>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
@@ -49,13 +53,14 @@ public sealed partial class GetUserByIdQuery
                 return NotFound();
 
             var userSchoppingCartPositionQuery = from uscp in _userShoppingCartModelProvider.Queryable
-                                                  where uscp.UserId == request.UserId
-                                                  select new
-                                                  {
-                                                      ProductId = uscp.ProductId,
-                                                      ProductCount = uscp.ProductCount,
-                                                      TotalPrice = uscp.TotalPrice
-                                                  };
+                                                 join p in _productModelProvider.Queryable on uscp.ProductId equals p.ProductId
+                                                 where uscp.UserId == request.UserId
+                                                 select new
+                                                 {
+                                                     ProductId = uscp.ProductId,
+                                                     ProductCount = uscp.ProductCount,
+                                                     TotalPrice = p.Price * uscp.ProductCount
+                                                 };
 
             var userSchoppingCartPositions = await _modelQueryExecutor.ToListAsync(userSchoppingCartPositionQuery, cancellationToken);
 
@@ -79,7 +84,8 @@ public sealed partial class GetUserByIdQuery
                     userSchoppingCartPositionQuery.Select(schoppingCartPosition => new Results.UserReference.UserSchoppingCartPositionReference()
                     {
                         ProductCount = schoppingCartPosition.ProductCount,
-                        ProductId = schoppingCartPosition.ProductId
+                        ProductId = schoppingCartPosition.ProductId,
+                        TotalPrice = schoppingCartPosition.TotalPrice
                     }),
                 DocumentList = userDocuments == null ? Array.Empty<Results.UserReference.UserDocumentReference>() :
                     userDocuments.Select(document => new Results.UserReference.UserDocumentReference()

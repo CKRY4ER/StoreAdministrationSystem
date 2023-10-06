@@ -1,26 +1,25 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Commands.Orders;
+namespace StoreAdministrationSystem.Application.Commands.Users;
 
-public sealed partial class CreateOrderCommand
+public sealed partial class AddProductInUserSchoppingCartCommand
 {
     private static Results.SuccessResult Success()
         => new();
 
-    private static Results.FailResult UserSchoppingCartIsEmpty()
-        => new(ApplicationErrorCodes.USER_SCHOPPING_CART_EMPTY, "User schopping cart is empty");
-
     private static Results.FailResult UserNotFound()
         => new(ApplicationErrorCodes.USER_NOT_FOUND, "User not found");
 
+    private static Results.FailResult ProductNotFound()
+        => new(ApplicationErrorCodes.PRODUCT_NOT_FOUND, "Product not found");
+
     private static Results.FailResult NotEnoughtProduct()
-        => new(ApplicationErrorCodes.NOT_ENOUGHT_PRODUCT, "There is not enough product to form an order");
+        => new(ApplicationErrorCodes.NOT_ENOUGHT_PRODUCT, "It is not possible to add more product than is in stock");
 
     public static class Results
     {
         public sealed class SuccessResult : ISuccessCommandResult
         {
-
         }
 
         public sealed class FailResult : IFailCommandResult

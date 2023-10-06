@@ -31,4 +31,28 @@ public sealed class User : Aggregate
         _shoppingCartPositions.Clear();
         UpdateDate = DateTimeOffset.UtcNow;
     }
+
+    public void AddSchoppingCartPositon(UserSchoppingCartPosition position)
+    {
+        _shoppingCartPositions.Add(position);
+        UpdateDate = DateTimeOffset.UtcNow;
+    }
+
+    public void AddProductInSchoppingCartPosition(UserSchoppingCartPosition positon, int productCount)
+    {
+        positon.AddProduct(productCount);
+        UpdateDate = DateTimeOffset.UtcNow;
+    }
+
+    public void ReduceProductAmmountInPosition(UserSchoppingCartPosition position, int productCount)
+    {
+        position.ReduceProduct(productCount);
+        UpdateDate = DateTimeOffset.UtcNow;
+    }
+
+    public void DeletePosition(UserSchoppingCartPosition position)
+    {
+        _shoppingCartPositions.Remove(position);
+        UpdateDate= DateTimeOffset.UtcNow;
+    }
 }

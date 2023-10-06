@@ -5,8 +5,6 @@ using StoreAdministrationSystem.DataAccess.Repositories.Orders;
 using StoreAdministrationSystem.DataAccess.Repositories.Products;
 using StoreAdministrationSystem.DataAccess.Repositories.Users;
 using StoreAdministrationSystem.Domain.Orders;
-using StoreAdministrationSystem.Domain.Users;
-using System.Security.Cryptography.X509Certificates;
 
 namespace StoreAdministrationSystem.Application.Commands.Orders;
 
@@ -19,14 +17,17 @@ public sealed partial class CreateOrderCommand
     {
         private readonly IUserRepository _userReposiotry;
         private readonly IOrderRepository _orderRepository;
+        private readonly IProductRepository _productRepository;
         private readonly ILogger _logger;
 
         public Handler(IUserRepository userReposiotry,
             IOrderRepository orderRepository,
+            IProductRepository productRepository,
             ILogger<Handler> logger)
         {
             _userReposiotry = userReposiotry;
             _orderRepository = orderRepository;
+            _productRepository = productRepository;
             _logger = logger;
         }
 
@@ -44,14 +45,19 @@ public sealed partial class CreateOrderCommand
 
             decimal orderTotalPrice = 0M;
 
-            foreach(var userShoppingCartPosition in user.ShoppingCartPositions)
+            foreach(var userSchoppingCartPosition in user.ShoppingCartPositions)
             {
-                var userShoppingCartPostionTotalPrice = userShoppingCartPosition.Product.Price * userShoppingCartPosition.ProductCount;
+                var product = await _productRepository.GetByIdAsync(userSchoppingCartPosition.ProductId, cancellationToken);
+
+                if (product!.Count < userSchoppingCartPosition.ProductCount)
+                    return NotEnoughtProduct();
+
+                var userShoppingCartPostionTotalPrice = userSchoppingCartPosition.Product.Price * userSchoppingCartPosition.ProductCount;
                 orderTotalPrice += userShoppingCartPostionTotalPrice;
 
-                orderPositionList.Add(new(userShoppingCartPosition.ProductId,
-                    userShoppingCartPosition.Product.Price,
-                    userShoppingCartPosition.ProductCount,
+                orderPositionList.Add(new(userSchoppingCartPosition.ProductId,
+                    userSchoppingCartPosition.Product.Price,
+                    userSchoppingCartPosition.ProductCount,
                     userShoppingCartPostionTotalPrice));
             }
 

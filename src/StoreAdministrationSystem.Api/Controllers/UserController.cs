@@ -98,6 +98,75 @@ public sealed class UserController : ApiControllerBase
             });
     }
 
+    [HttpPost("{userId:guid}/add-product/{productId:guid}")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(422)]
+    [ProducesResponseType(500)]
+    [ProducesErrorResponseType(typeof(ProblemDetails))]
+    public async Task<IActionResult> AddProductAsync(
+        [FromServices] ICommandExecutor commandExecutor,
+        [FromRoute] Guid userId,
+        [FromRoute] Guid productId,
+        [FromQuery][Required][Range(1, 1000)] int productCount,
+        CancellationToken cancellationToken = default)
+    {
+        var commandResult = await commandExecutor.ExecuteAsync<
+            AddProductInUserSchoppingCartCommand,
+            AddProductInUserSchoppingCartCommand.Results.SuccessResult,
+            AddProductInUserSchoppingCartCommand.Results.FailResult>(new()
+            {
+                ProductCount = productCount,
+                ProductId = productId,
+                UserId = userId
+            }, cancellationToken);
+
+        return commandResult.Match(
+            success => Ok(),
+            fail => fail.Code switch
+            {
+                ApplicationErrorCodes.USER_NOT_FOUND => NotFound(fail.Code, fail.Message),
+                ApplicationErrorCodes.PRODUCT_NOT_FOUND => NotFound(fail.Code, fail.Message),
+                ApplicationErrorCodes.NOT_ENOUGHT_PRODUCT => UnprocessableEntity(fail.Code, fail.Message),
+                _ => InternalServerError()
+            });
+    }
+
+    [HttpPost("{userId:guid}/delete-product/{productId:guid}")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(422)]
+    [ProducesResponseType(500)]
+    [ProducesErrorResponseType(typeof(ProblemDetails))]
+    public async Task<IActionResult> DeleteProductAsync(
+        [FromServices] ICommandExecutor commandExecutor,
+        [FromRoute] Guid userId,
+        [FromRoute] Guid productId,
+        [FromQuery][Required][Range(1, 1000)] int productCount,
+        CancellationToken cancellationToken = default)
+    {
+        var commandResult = await commandExecutor.ExecuteAsync<
+            DeleteProductFromSchoppingCartPositionCommand,
+            DeleteProductFromSchoppingCartPositionCommand.Results.SuccessResult,
+            DeleteProductFromSchoppingCartPositionCommand.Results.FailResults>(new()
+            {
+                UserId = userId,
+                ProductId = productId,
+                ProductCount = productCount
+            }, cancellationToken);
+
+        return commandResult.Match(
+            success => Ok(),
+            fail => fail.Code switch
+            {
+                ApplicationErrorCodes.USER_NOT_FOUND => NotFound(fail.Code, fail.Message),
+                ApplicationErrorCodes.PRODUCT_NOT_FOUND => NotFound(fail.Code, fail.Message),
+                ApplicationErrorCodes.USER_SCHOPPING_CART_POSITION_NOT_FOUND => UnprocessableEntity(fail.Code, fail.Message),
+                _ => InternalServerError()
+            });
+    }
+
+
     #region Models
 
     public sealed class CreateUserModel

@@ -94,6 +94,7 @@ public sealed class OrderController : ApiControllerBase
             {
                 ApplicationErrorCodes.USER_SCHOPPING_CART_EMPTY => UnprocessableEntity(fail.Code, fail.Message),
                 ApplicationErrorCodes.USER_NOT_FOUND => UnprocessableEntity(fail.Code, fail.Message),
+                ApplicationErrorCodes.NOT_ENOUGHT_PRODUCT => UnprocessableEntity(fail.Code, fail.Message),
                 _ => InternalServerError()
             });
     }

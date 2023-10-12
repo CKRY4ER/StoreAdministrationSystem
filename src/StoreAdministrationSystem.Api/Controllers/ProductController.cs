@@ -101,12 +101,52 @@ public sealed class ProductController : ApiControllerBase
             });
     }
 
+    [HttpPatch("{productId:guid}/update")]
+    public async Task<IActionResult> UpdateProductAsync(
+        [FromServices] ICommandExecutor commandExecutor,
+        [FromBody] UpdateProductModel model,
+        CancellationToken cancellationToken = default)
+    {
+        var commandResult = await commandExecutor.ExecuteAsync<
+            UpdateProductCommand,
+            UpdateProductCommand.Results.SuccessResult,
+            UpdateProductCommand.Results.FailResult>(new()
+            {
+                ProductId = model.ProductId,
+                ProductCategoryId = model.ProductCategoryId,
+                ProductName = model.ProductName,
+                Description = model.Description,
+                Price = model.Price,
+                ProductPicture = model.ProductPicture,
+                Parameters = model.Parameters
+            }, cancellationToken);
+
+        return commandResult.Match(
+            success => Ok(),
+            fail => fail.Code switch
+            {
+                ApplicationErrorCodes.PRODUCT_NOT_FOUND => NotFound(fail.Code, fail.Message),
+                ApplicationErrorCodes.PRODUCT_CATEGORY_NOT_FOUND => NotFound(fail.Code, fail.Message),
+                _ => InternalServerError()
+            });
+    }
 
 
     #region Models
 
     public sealed class CreateProductModel
     {
+        public string ProductName { get; init; } = null!;
+        public string Description { get; init; } = null!;
+        public decimal Price { get; init; }
+        public Uri ProductPicture { get; init; } = null!;
+        public Dictionary<string, string> Parameters { get; init; } = null!;
+        public Guid ProductCategoryId { get; init; }
+    }
+
+    public sealed class UpdateProductModel
+    {
+        public Guid ProductId { get; init; }
         public string ProductName { get; init; } = null!;
         public string Description { get; init; } = null!;
         public decimal Price { get; init; }

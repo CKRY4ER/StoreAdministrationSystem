@@ -94,14 +94,14 @@ public class ProductCategoryController : ApiControllerBase
     }
 
     [HttpPatch("{categoryId:guid}/update")]
-    [ProducesResponseType(204)]
+    [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> UpdateProductCategoryAsync(
         [FromServices] ICommandExecutor commandExecutor,
         [FromRoute] Guid categoryId,
-        [FromQuery] string name,
+        [FromQuery][Required] string name = null!,
         CancellationToken cancellationToken = default)
     {
         var commandResult = await commandExecutor.ExecuteAsync<
@@ -114,7 +114,7 @@ public class ProductCategoryController : ApiControllerBase
             }, cancellationToken);
 
         return commandResult.Match(
-            success => NoContent(),
+            success => Ok(),
             fail => fail.Code switch
             {
                 ApplicationErrorCodes.PRODUCT_CATEGORY_NOT_FOUND => NotFound(fail.Code, fail.Message),

@@ -2,6 +2,7 @@
 using StoreAdministrationSystem.Application;
 using StoreAdministrationSystem.Application.Commands.Orders;
 using StoreAdministrationSystem.Application.Framework;
+using StoreAdministrationSystem.Application.Queries;
 using StoreAdministrationSystem.Application.Queries.Orders;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,14 +13,14 @@ namespace StoreAdministrationSystem.Api.Controllers;
 public sealed class OrderController : ApiControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(GetPagedOrderListQuery.Results.OrderReference[]), 200)]
+    [ProducesResponseType(typeof(Page<GetPagedOrderListQuery.Results.OrderReference>), 200)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetPagedOrderListAsync(
         [FromServices] IQueryExecutor queryExecutor,
         [FromQuery] int offset = 0,
         [FromQuery][Range(0, 100)] int count = 100,
-        [FromQuery] Guid? orderid = null,
+        [FromQuery] Guid? orderId = null,
         [FromQuery] Guid? userId = null,
         CancellationToken cancellationToken = default)
     {
@@ -30,7 +31,7 @@ public sealed class OrderController : ApiControllerBase
             {
                 Offset = offset,
                 Count = count,
-                OrderId = orderid,
+                OrderId = orderId,
                 UserId = userId
             }, cancellationToken);
 

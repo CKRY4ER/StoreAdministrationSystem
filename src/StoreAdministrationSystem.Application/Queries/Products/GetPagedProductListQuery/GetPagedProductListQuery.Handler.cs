@@ -5,7 +5,7 @@ using StoreAdministrationSystem.ReadModel.ProductCategories;
 using StoreAdministrationSystem.ReadModel.Products;
 using System.Linq.Expressions;
 
-namespace StoreAdministrationSystem.Application.Queries.Products;
+namespace StoreAdministrationSystem.Application.Queries.Products.GetPagedProductListQuery;
 
 public sealed partial class GetPagedProductListQuery
 {
@@ -43,11 +43,11 @@ public sealed partial class GetPagedProductListQuery
             var total = await _modelQueryExecutor.CountAsync(query, cancellationToken);
 
             if (total == 0)
-                return Success(Page<Results.ProductReference>.Empty(request.Offset));
+                return Success(Page<ProductReference>.Empty(request.Offset));
 
             var resultQuery = from p in query
                               join pc in _productCategoryModelProvider.Queryable on p.ProductCategoryId equals pc.ProductCategoryId
-                              select new Results.ProductReference
+                              select new ProductReference
                               {
                                   ProductId = p.ProductId,
                                   ProductName = p.ProductName,

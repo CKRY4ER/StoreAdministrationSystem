@@ -1,10 +1,10 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Users;
+namespace StoreAdministrationSystem.Application.Queries.Users.GetUserByIdQuery;
 
 public sealed partial class GetUserByIdQuery
 {
-    private static Results.SuccessResult Success(Results.UserReference user)
+    private static Results.SuccessResult Success(UserReference user)
         => new(user);
 
     private static Results.FailResult NotFound()
@@ -29,32 +29,32 @@ public sealed partial class GetUserByIdQuery
             }
 
             public string Code { get; init; } = null!;
-            public string Message { get; init; } = null!;   
+            public string Message { get; init; } = null!;
+        }
+    }
+
+    public sealed class UserReference
+    {
+        public Guid UserId { get; init; }
+        public string Login { get; init; } = null!;
+        public string Email { get; init; } = null!;
+        public bool IsAdmin { get; init; }
+        public IEnumerable<UserSchoppingCartPositionReference> SchoppingCartPositionList { get; init; } = null!;
+        public IEnumerable<UserDocumentReference> DocumentList { get; init; } = null!;
+        public DateTimeOffset CreateDate { get; init; }
+        public DateTimeOffset UpdateDate { get; init; }
+
+        public sealed class UserSchoppingCartPositionReference
+        {
+            public Guid ProductId { get; init; }
+            public int ProductCount { get; init; }
+            public decimal TotalPrice { get; init; }
         }
 
-        public sealed class UserReference
+        public sealed class UserDocumentReference
         {
-            public Guid UserId { get; init; }
-            public string Login { get; init; } = null!;
-            public string Email { get; init; } = null!;
-            public bool IsAdmin { get; init; }
-            public IEnumerable<UserSchoppingCartPositionReference> SchoppingCartPositionList { get; init; } = null!;
-            public IEnumerable<UserDocumentReference> DocumentList { get; init; } = null!;
-            public DateTimeOffset CreateDate { get; init; }
-            public DateTimeOffset UpdateDate { get; init; } 
-
-            public sealed class UserSchoppingCartPositionReference
-            {
-                public Guid ProductId { get; init; }
-                public int ProductCount { get; init; }
-                public decimal TotalPrice { get; init; }
-            }
-
-            public sealed class UserDocumentReference
-            {
-                public Guid DocumentId { get; init; }
-                public string DocumentType { get; init; } = null!;
-            }
+            public Guid DocumentId { get; init; }
+            public string DocumentType { get; init; } = null!;
         }
     }
 }

@@ -4,7 +4,7 @@ using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.ReadModel;
 using StoreAdministrationSystem.ReadModel.ProductCategories;
 
-namespace StoreAdministrationSystem.Application.Queries.ProductCategories;
+namespace StoreAdministrationSystem.Application.Queries.ProductCategories.GetProductCategoriesListQuery;
 
 public sealed partial class GetProductCategoriesListQuery
 {
@@ -40,7 +40,7 @@ public sealed partial class GetProductCategoriesListQuery
             if (productCategories.Any() is false)
                 return NotFound();
 
-            return Success(productCategories.Select(pc => new Results.ProductCategoryReference()
+            return Success(productCategories.Select(pc => new ProductCategoryReference()
             {
                 ProductCategoryId = pc.ProductCategoryId,
                 Name = pc.Name

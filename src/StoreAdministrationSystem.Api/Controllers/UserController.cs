@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreAdministrationSystem.Application;
 using StoreAdministrationSystem.Application.Commands.Users;
+using StoreAdministrationSystem.Application.Commands.Users.AddProductInUserSchoppingCartCommand;
+using StoreAdministrationSystem.Application.Commands.Users.CreateUserCommand;
 using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.Application.Queries;
-using StoreAdministrationSystem.Application.Queries.Users;
+using StoreAdministrationSystem.Application.Queries.Users.GetPagedUserListQuery;
+using StoreAdministrationSystem.Application.Queries.Users.GetUserByIdQuery;
 using System.ComponentModel.DataAnnotations;
 
 namespace StoreAdministrationSystem.Api.Controllers;
@@ -13,7 +16,7 @@ namespace StoreAdministrationSystem.Api.Controllers;
 public sealed class UserController : ApiControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(Page<GetPagedUserListQuery.Results.UserReference>), 200)]
+    [ProducesResponseType(typeof(Page<GetPagedUserListQuery.UserReference>), 200)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetPagedUserListAsync(
@@ -42,11 +45,11 @@ public sealed class UserController : ApiControllerBase
     }
 
     [HttpGet("{userId:guid}")]
-    [ProducesResponseType(typeof(GetUserByIdQuery.Results.UserReference), 200)]
+    [ProducesResponseType(typeof(GetUserByIdQuery.UserReference), 200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
-    public async Task<IActionResult> GetUserByIdQuery(
+    public async Task<IActionResult> GetUserByIdAsync(
         [FromServices] IQueryExecutor queryExecutor,
         [FromQuery] Guid userId,
         CancellationToken cancellationToken = default)

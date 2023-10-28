@@ -3,7 +3,7 @@ using OneOf;
 using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.DataAccess.Repositories.ProductCategories;
 
-namespace StoreAdministrationSystem.Application.Commands.ProductCategories;
+namespace StoreAdministrationSystem.Application.Commands.ProductCategories.UpdateProductCategoryCommand;
 
 public sealed partial class UpdateProductCategoryCommand
 {

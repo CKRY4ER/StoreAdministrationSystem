@@ -5,7 +5,7 @@ using StoreAdministrationSystem.ReadModel;
 using StoreAdministrationSystem.ReadModel.Products;
 using StoreAdministrationSystem.ReadModel.Users;
 
-namespace StoreAdministrationSystem.Application.Queries.Users;
+namespace StoreAdministrationSystem.Application.Queries.Users.GetUserByIdQuery;
 
 public sealed partial class GetUserByIdQuery
 {
@@ -80,15 +80,15 @@ public sealed partial class GetUserByIdQuery
                 Login = user.Login,
                 Email = user.Email,
                 IsAdmin = user.IsAdmin,
-                SchoppingCartPositionList = userSchoppingCartPositions == null ? Array.Empty<Results.UserReference.UserSchoppingCartPositionReference>() :
-                    userSchoppingCartPositionQuery.Select(schoppingCartPosition => new Results.UserReference.UserSchoppingCartPositionReference()
+                SchoppingCartPositionList = userSchoppingCartPositions == null ? Array.Empty<UserReference.UserSchoppingCartPositionReference>() :
+                    userSchoppingCartPositionQuery.Select(schoppingCartPosition => new UserReference.UserSchoppingCartPositionReference()
                     {
                         ProductCount = schoppingCartPosition.ProductCount,
                         ProductId = schoppingCartPosition.ProductId,
                         TotalPrice = schoppingCartPosition.TotalPrice
                     }),
-                DocumentList = userDocuments == null ? Array.Empty<Results.UserReference.UserDocumentReference>() :
-                    userDocuments.Select(document => new Results.UserReference.UserDocumentReference()
+                DocumentList = userDocuments == null ? Array.Empty<UserReference.UserDocumentReference>() :
+                    userDocuments.Select(document => new UserReference.UserDocumentReference()
                     {
                         DocumentId = document.DocumentId,
                         DocumentType = document.DocumentType

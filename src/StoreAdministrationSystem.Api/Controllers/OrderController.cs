@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreAdministrationSystem.Application;
-using StoreAdministrationSystem.Application.Commands.Orders;
+using StoreAdministrationSystem.Application.Commands.Orders.CreateOrderCommand;
 using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.Application.Queries;
-using StoreAdministrationSystem.Application.Queries.Orders;
+using StoreAdministrationSystem.Application.Queries.Orders.GetOrderByIdQuery;
+using StoreAdministrationSystem.Application.Queries.Orders.GetPagedOrderListQuery;
 using System.ComponentModel.DataAnnotations;
 
 namespace StoreAdministrationSystem.Api.Controllers;
@@ -13,7 +14,7 @@ namespace StoreAdministrationSystem.Api.Controllers;
 public sealed class OrderController : ApiControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(Page<GetPagedOrderListQuery.Results.OrderReference>), 200)]
+    [ProducesResponseType(typeof(Page<GetPagedOrderListQuery.OrderReference>), 200)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetPagedOrderListAsync(
@@ -44,13 +45,13 @@ public sealed class OrderController : ApiControllerBase
     }
 
     [HttpGet("{orderId:guid}")]
-    [ProducesResponseType(typeof(GetOrderByIdQuery.Results.OrderReference), 200)]
+    [ProducesResponseType(typeof(GetOrderByIdQuery.OrderByIdReference), 200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetOrderByIdAsync(
         [FromServices] IQueryExecutor queryExecutor,
-        [FromRoute] Guid orderId,
+        [FromRoute][Required] Guid orderId,
         CancellationToken cancellationToken = default)
     {
         var queryResult = await queryExecutor.ExecuteAsync<

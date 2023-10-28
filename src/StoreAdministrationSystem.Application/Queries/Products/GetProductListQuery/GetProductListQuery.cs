@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Products;
+namespace StoreAdministrationSystem.Application.Queries.Products.GetProductListQuery;
 
 public sealed partial class GetProductListQuery : IQuery<
     GetProductListQuery.Results.SuccessResult,

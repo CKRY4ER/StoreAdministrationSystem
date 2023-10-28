@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Commands.Orders;
+namespace StoreAdministrationSystem.Application.Commands.Orders.CreateOrderCommand;
 
 public sealed partial class CreateOrderCommand : ICommand<
     CreateOrderCommand.Results.SuccessResult,

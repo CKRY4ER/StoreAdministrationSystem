@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreAdministrationSystem.Application;
 using StoreAdministrationSystem.Application.Commands.ProductCategories;
+using StoreAdministrationSystem.Application.Commands.ProductCategories.CreateProductCategoryCommand;
+using StoreAdministrationSystem.Application.Commands.ProductCategories.UpdateProductCategoryCommand;
 using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.Application.Queries;
 using StoreAdministrationSystem.Application.Queries.ProductCategories;
+using StoreAdministrationSystem.Application.Queries.ProductCategories.GetPagedProductCategoriesListQuery;
+using StoreAdministrationSystem.Application.Queries.ProductCategories.GetProductCategoriesListQuery;
 using System.ComponentModel.DataAnnotations;
 
 namespace StoreAdministrationSystem.Api.Controllers;
@@ -13,7 +17,7 @@ namespace StoreAdministrationSystem.Api.Controllers;
 public class ProductCategoryController : ApiControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(Page<GetPagedProductCategoriesListQuery.Results.ProductCatogoryReference>), 200)]
+    [ProducesResponseType(typeof(Page<GetPagedProductCategoriesListQuery.ProductCatogoryReference>), 200)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetPagedProductCategoriesListAsync(
@@ -71,7 +75,7 @@ public class ProductCategoryController : ApiControllerBase
     }
 
     [HttpGet("list")]
-    [ProducesResponseType(typeof(GetProductCategoriesListQuery.Results.ProductCategoryReference[]), 200)]
+    [ProducesResponseType(typeof(GetProductCategoriesListQuery.ProductCategoryReference[]), 200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]

@@ -4,10 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>e144c9bf-376d-46d5-b79d-256899f995ac</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
 	  <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.5.1" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	  <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 	  <PackageReference Include="Serilog.Enrichers.Context" Version="4.6.5" />
@@ -22,10 +26,6 @@
 	  <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 	  <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
 	  <PackageReference Include="Serilog.Enrichers.Sensitive" Version="1.7.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreAdministrationSystem.Application;
 using StoreAdministrationSystem.Application.Commands.Products;
+using StoreAdministrationSystem.Application.Commands.Products.CreateProductCommand;
+using StoreAdministrationSystem.Application.Commands.Products.UpdateProductCommand;
 using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.Application.Queries;
 using StoreAdministrationSystem.Application.Queries.Products;
+using StoreAdministrationSystem.Application.Queries.Products.GetPagedProductListQuery;
+using StoreAdministrationSystem.Application.Queries.Products.GetProductListQuery;
 using System.ComponentModel.DataAnnotations;
 
 namespace StoreAdministrationSystem.Api.Controllers;
@@ -13,7 +17,7 @@ namespace StoreAdministrationSystem.Api.Controllers;
 public sealed class ProductController : ApiControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(Page<GetPagedProductListQuery.Results.ProductReference>), 200)]
+    [ProducesResponseType(typeof(Page<GetPagedProductListQuery.ProductReference>), 200)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetPagedProductListAsync(
@@ -45,34 +49,34 @@ public sealed class ProductController : ApiControllerBase
             });
     }
 
-    [HttpGet("list")]
-    [ProducesResponseType(typeof(GetProductListQuery.Results.ProductReference[]), 200)]
-    [ProducesResponseType(204)]
-    [ProducesResponseType(500)]
-    [ProducesErrorResponseType(typeof(ProblemDetails))]
-    public async Task<IActionResult> GetProductListAsync(
-        [FromServices] IQueryExecutor queryExecutor,
-        [FromQuery] Guid productCategoryId,
-        CancellationToken cancellationToken = default)
-    {
-        var queryResult = await queryExecutor.ExecuteAsync<
-            GetProductListQuery,
-            GetProductListQuery.Results.SuccessResult,
-            GetProductListQuery.Results.FailResults>(new()
-            {
-                ProductCategoryid = productCategoryId
-            }, cancellationToken);
+    //[HttpGet("list")]
+    //[ProducesResponseType(typeof(GetProductListQuery.ProductReference[]), 200)]
+    //[ProducesResponseType(204)]
+    //[ProducesResponseType(500)]
+    //[ProducesErrorResponseType(typeof(ProblemDetails))]
+    //public async Task<IActionResult> GetProductListAsync(
+    //    [FromServices] IQueryExecutor queryExecutor,
+    //    [FromQuery] Guid productCategoryId,
+    //    CancellationToken cancellationToken = default)
+    //{
+    //    var queryResult = await queryExecutor.ExecuteAsync<
+    //        GetProductListQuery,
+    //        GetProductListQuery.Results.SuccessResult,
+    //        GetProductListQuery.Results.FailResults>(new()
+    //        {
+    //            ProductCategoryid = productCategoryId
+    //        }, cancellationToken);
 
-        return queryResult.Match(
-            success => Ok(success.Products),
-            fail => fail.Code switch
-            {
-                ApplicationErrorCodes.PRODUCT_NOT_FOUND => NotFound(fail.Code, fail.Message),
-                _ => InternalServerError()
-            });
-    }
+    //    return queryResult.Match(
+    //        success => Ok(success.Products),
+    //        fail => fail.Code switch
+    //        {
+    //            ApplicationErrorCodes.PRODUCT_NOT_FOUND => NotFound(fail.Code, fail.Message),
+    //            _ => InternalServerError()
+    //        });
+    //}
 
-    [HttpPost()]
+    [HttpPost]
     [ProducesResponseType(200)]
     [ProducesResponseType(409)]
     [ProducesResponseType(500)]
@@ -102,6 +106,10 @@ public sealed class ProductController : ApiControllerBase
     }
 
     [HttpPatch("{productId:guid}/update")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
+    [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> UpdateProductAsync(
         [FromServices] ICommandExecutor commandExecutor,
         [FromBody] UpdateProductModel model,

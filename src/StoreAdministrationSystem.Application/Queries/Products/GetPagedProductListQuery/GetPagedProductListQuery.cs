@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Products;
+namespace StoreAdministrationSystem.Application.Queries.Products.GetPagedProductListQuery;
 
 public sealed partial class GetPagedProductListQuery : IQuery<
     GetPagedProductListQuery.Results.SuccessResult,

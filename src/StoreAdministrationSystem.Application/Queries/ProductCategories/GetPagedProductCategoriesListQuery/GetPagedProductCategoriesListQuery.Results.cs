@@ -1,10 +1,10 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.ProductCategories;
+namespace StoreAdministrationSystem.Application.Queries.ProductCategories.GetPagedProductCategoriesListQuery;
 
 public sealed partial class GetPagedProductCategoriesListQuery
 {
-    private static Results.SuccessResult Success(Page<Results.ProductCatogoryReference> productCategories)
+    private static Results.SuccessResult Success(Page<ProductCatogoryReference> productCategories)
         => new(productCategories);
 
     public static class Results
@@ -30,13 +30,13 @@ public sealed partial class GetPagedProductCategoriesListQuery
             public string Message { get; init; } = null!;
             public string Code { get; init; } = null!;
         }
+    }
 
-        public sealed class ProductCatogoryReference
-        {
-            public Guid ProductCategoryId { get; init; }
-            public string Name { get; init; } = null!;
-            public DateTimeOffset CreateDate { get; init; }
-            public DateTimeOffset UpdateDate { get; init; }
-        }
+    public sealed class ProductCatogoryReference
+    {
+        public Guid ProductCategoryId { get; init; }
+        public string Name { get; init; } = null!;
+        public DateTimeOffset CreateDate { get; init; }
+        public DateTimeOffset UpdateDate { get; init; }
     }
 }

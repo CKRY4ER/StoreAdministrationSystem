@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Commands.Users;
+namespace StoreAdministrationSystem.Application.Commands.Users.AddProductInUserSchoppingCartCommand;
 
 public sealed partial class AddProductInUserSchoppingCartCommand : ICommand<
     AddProductInUserSchoppingCartCommand.Results.SuccessResult,

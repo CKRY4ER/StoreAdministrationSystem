@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Users;
+namespace StoreAdministrationSystem.Application.Queries.Users.GetUserByIdQuery;
 
 public sealed partial class GetUserByIdQuery : IQuery<
     GetUserByIdQuery.Results.SuccessResult,

@@ -3,7 +3,7 @@ using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.DataAccess.Repositories.Users;
 using StoreAdministrationSystem.Domain.Users;
 
-namespace StoreAdministrationSystem.Application.Commands.Users;
+namespace StoreAdministrationSystem.Application.Commands.Users.CreateUserCommand;
 
 public sealed partial class CreateUserCommand
 {

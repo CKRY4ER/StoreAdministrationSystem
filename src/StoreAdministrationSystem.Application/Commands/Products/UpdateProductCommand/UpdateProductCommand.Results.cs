@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Commands.Products;
+namespace StoreAdministrationSystem.Application.Commands.Products.UpdateProductCommand;
 
 public sealed partial class UpdateProductCommand
 {

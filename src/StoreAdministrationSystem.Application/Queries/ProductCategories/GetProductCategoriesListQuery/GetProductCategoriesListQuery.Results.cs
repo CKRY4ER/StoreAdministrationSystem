@@ -1,10 +1,10 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.ProductCategories;
+namespace StoreAdministrationSystem.Application.Queries.ProductCategories.GetProductCategoriesListQuery;
 
 public sealed partial class GetProductCategoriesListQuery
 {
-    private static Results.SuccessResult Success(IEnumerable<Results.ProductCategoryReference> productCategories)
+    private static Results.SuccessResult Success(IEnumerable<ProductCategoryReference> productCategories)
         => new(productCategories);
 
     private static Results.FailResult NotFound()
@@ -34,11 +34,11 @@ public sealed partial class GetProductCategoriesListQuery
             public string Message { get; init; } = null!;
             public string Code { get; init; } = null!;
         }
+    }
 
-        public sealed class ProductCategoryReference
-        {
-            public Guid ProductCategoryId { get; init; }
-            public string Name { get; init; } = null!;
-        }
+    public sealed class ProductCategoryReference
+    {
+        public Guid ProductCategoryId { get; init; }
+        public string Name { get; init; } = null!;
     }
 }

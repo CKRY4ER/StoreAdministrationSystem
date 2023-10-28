@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Commands.Products;
+namespace StoreAdministrationSystem.Application.Commands.Products.CreateProductCommand;
 
 public sealed partial class CreateProductCommand
 {

@@ -4,7 +4,7 @@ using StoreAdministrationSystem.DataAccess.Repositories.Products;
 using StoreAdministrationSystem.DataAccess.Repositories.Users;
 using StoreAdministrationSystem.Domain.Users;
 
-namespace StoreAdministrationSystem.Application.Commands.Users;
+namespace StoreAdministrationSystem.Application.Commands.Users.AddProductInUserSchoppingCartCommand;
 
 public sealed partial class AddProductInUserSchoppingCartCommand
 {

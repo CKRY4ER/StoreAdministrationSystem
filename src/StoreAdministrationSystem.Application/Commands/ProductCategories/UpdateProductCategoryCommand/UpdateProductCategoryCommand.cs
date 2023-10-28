@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Commands.ProductCategories;
+namespace StoreAdministrationSystem.Application.Commands.ProductCategories.UpdateProductCategoryCommand;
 
 public sealed partial class UpdateProductCategoryCommand : ICommand<
     UpdateProductCategoryCommand.Results.SuccessResult,

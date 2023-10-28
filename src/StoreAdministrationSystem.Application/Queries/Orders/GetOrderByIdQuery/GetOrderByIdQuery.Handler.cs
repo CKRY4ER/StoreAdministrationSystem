@@ -5,7 +5,7 @@ using StoreAdministrationSystem.ReadModel.Orders;
 using StoreAdministrationSystem.ReadModel.Products;
 using System.Data;
 
-namespace StoreAdministrationSystem.Application.Queries.Orders;
+namespace StoreAdministrationSystem.Application.Queries.Orders.GetOrderByIdQuery;
 
 public sealed partial class GetOrderByIdQuery
 {
@@ -52,7 +52,7 @@ public sealed partial class GetOrderByIdQuery
             var orderPositionQuery = from op in _orderPositionModelProvider.Queryable
                                      where op.OrderId == request.OrderId
                                      join p in _productModelProvider.Queryable on op.ProductId equals p.ProductId
-                                     select new Results.OrderPositionReference
+                                     select new OrderPositionReference
                                      {
                                          ProductId = op.ProductId,
                                          ProductName = p.ProductName,

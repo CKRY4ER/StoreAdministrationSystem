@@ -1,7 +1,7 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 using System.Windows.Input;
 
-namespace StoreAdministrationSystem.Application.Commands.Users;
+namespace StoreAdministrationSystem.Application.Commands.Users.CreateUserCommand;
 
 public sealed partial class CreateUserCommand : ICommand<
     CreateUserCommand.Results.SuccessResult,

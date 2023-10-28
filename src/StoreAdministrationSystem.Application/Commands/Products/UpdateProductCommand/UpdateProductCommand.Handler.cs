@@ -4,7 +4,7 @@ using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.DataAccess.Repositories.ProductCategories;
 using StoreAdministrationSystem.DataAccess.Repositories.Products;
 
-namespace StoreAdministrationSystem.Application.Commands.Products;
+namespace StoreAdministrationSystem.Application.Commands.Products.UpdateProductCommand;
 
 public sealed partial class UpdateProductCommand
 {

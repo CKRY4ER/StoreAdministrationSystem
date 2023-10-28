@@ -5,7 +5,7 @@ using StoreAdministrationSystem.DataAccess.Repositories.ProductCategories;
 using StoreAdministrationSystem.DataAccess.Repositories.Products;
 using StoreAdministrationSystem.Domain.Products;
 
-namespace StoreAdministrationSystem.Application.Commands.Products;
+namespace StoreAdministrationSystem.Application.Commands.Products.CreateProductCommand;
 
 public sealed partial class CreateProductCommand
 {

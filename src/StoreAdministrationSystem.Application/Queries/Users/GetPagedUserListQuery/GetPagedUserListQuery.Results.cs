@@ -1,10 +1,10 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Users;
+namespace StoreAdministrationSystem.Application.Queries.Users.GetPagedUserListQuery;
 
 public sealed partial class GetPagedUserListQuery
 {
-    private static Results.SuccessResult Success(Page<Results.UserReference> users)
+    private static Results.SuccessResult Success(Page<UserReference> users)
         => new(users);
 
     public static class Results
@@ -28,15 +28,15 @@ public sealed partial class GetPagedUserListQuery
             public string Code { get; init; } = null!;
             public string Message { get; init; } = null!;
         }
+    }
 
-        public class UserReference
-        {
-            public Guid UserId { get; init; }
-            public string Login { get; init; } = null!;
-            public string Email { get; init; } = null!;
-            public bool IsAdmin { get; init; }
-            public DateTimeOffset CreateDate { get; init; }
-            public DateTimeOffset UpdateDate { get; init; }
-        }
+    public class UserReference
+    {
+        public Guid UserId { get; init; }
+        public string Login { get; init; } = null!;
+        public string Email { get; init; } = null!;
+        public bool IsAdmin { get; init; }
+        public DateTimeOffset CreateDate { get; init; }
+        public DateTimeOffset UpdateDate { get; init; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Users;
+namespace StoreAdministrationSystem.Application.Queries.Users.GetPagedUserListQuery;
 
 public sealed partial class GetPagedUserListQuery : IQuery<
     GetPagedUserListQuery.Results.SuccessResult,

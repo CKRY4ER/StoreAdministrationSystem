@@ -1,10 +1,10 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Orders;
+namespace StoreAdministrationSystem.Application.Queries.Orders.GetPagedOrderListQuery;
 
 public sealed partial class GetPagedOrderListQuery
 {
-    private static Results.SuccessResult Success(Page<Results.OrderReference> orders)
+    private static Results.SuccessResult Success(Page<OrderReference> orders)
         => new(orders);
 
     public static class Results
@@ -30,15 +30,15 @@ public sealed partial class GetPagedOrderListQuery
             public string Code { get; init; } = null!;
             public string Message { get; init; } = null!;
         }
+    }
 
-        public sealed class OrderReference
-        {
-            public Guid OrderId { get; init; }
-            public Guid UserId { get; init; }
-            public decimal TotalPrice { get; init; }
-            public string Status { get; init; } = null!;
-            public DateTimeOffset CreateDate { get; init; }
-            public DateTimeOffset UpdateDate { get; init; }
-        }
+    public sealed class OrderReference
+    {
+        public Guid OrderId { get; init; }
+        public Guid UserId { get; init; }
+        public decimal TotalPrice { get; init; }
+        public string Status { get; init; } = null!;
+        public DateTimeOffset CreateDate { get; init; }
+        public DateTimeOffset UpdateDate { get; init; }
     }
 }

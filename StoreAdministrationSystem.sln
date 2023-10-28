@@ -31,9 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreAdministrationSystem.R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreAdministrationSystem.ReadModel.PostgresSql", "src\StoreAdministrationSystem.ReadModel.PostgresSql\StoreAdministrationSystem.ReadModel.PostgresSql.csproj", "{53DD798A-F48A-4EE5-B576-137C701D5824}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreAdministrationSystem.Integration.Client", "src\StoreAdministrationSystem.Integration.Client\StoreAdministrationSystem.Integration.Client.csproj", "{DD05CACD-01CC-4C17-8205-7F28D6010A97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreAdministrationSystem.Integration.Client", "src\StoreAdministrationSystem.Integration.Client\StoreAdministrationSystem.Integration.Client.csproj", "{DD05CACD-01CC-4C17-8205-7F28D6010A97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreAdministrationSystem.Admin.Api", "src\StoreAdministrationSystem.Admin.Api\StoreAdministrationSystem.Admin.Api.csproj", "{E24E26CB-A741-41B2-99FB-BFCBC7E19570}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreAdministrationSystem.Admin.Api", "src\StoreAdministrationSystem.Admin.Api\StoreAdministrationSystem.Admin.Api.csproj", "{E24E26CB-A741-41B2-99FB-BFCBC7E19570}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreAdministrationSystem.Admin.CLient", "src\StoreAdministrationSystem.Admin.CLient\StoreAdministrationSystem.Admin.CLient.csproj", "{140CD51E-E29C-41B5-B5E5-8F165EAE4ED4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{E24E26CB-A741-41B2-99FB-BFCBC7E19570}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E24E26CB-A741-41B2-99FB-BFCBC7E19570}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E24E26CB-A741-41B2-99FB-BFCBC7E19570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{140CD51E-E29C-41B5-B5E5-8F165EAE4ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{140CD51E-E29C-41B5-B5E5-8F165EAE4ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{140CD51E-E29C-41B5-B5E5-8F165EAE4ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{140CD51E-E29C-41B5-B5E5-8F165EAE4ED4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{53DD798A-F48A-4EE5-B576-137C701D5824} = {FCCFD5C4-C78B-4329-84F3-93772FB2E62D}
 		{DD05CACD-01CC-4C17-8205-7F28D6010A97} = {DC04C3C3-65D9-40B5-A987-690C0E87F238}
 		{E24E26CB-A741-41B2-99FB-BFCBC7E19570} = {DC04C3C3-65D9-40B5-A987-690C0E87F238}
+		{140CD51E-E29C-41B5-B5E5-8F165EAE4ED4} = {DC04C3C3-65D9-40B5-A987-690C0E87F238}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F52653CE-0A09-473F-A355-557705D8777E}

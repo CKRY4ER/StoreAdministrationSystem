@@ -6,7 +6,7 @@ using StoreAdministrationSystem.DataAccess.Repositories.Products;
 using StoreAdministrationSystem.DataAccess.Repositories.Users;
 using StoreAdministrationSystem.Domain.Orders;
 
-namespace StoreAdministrationSystem.Application.Commands.Orders;
+namespace StoreAdministrationSystem.Application.Commands.Orders.CreateOrderCommand;
 
 public sealed partial class CreateOrderCommand
 {

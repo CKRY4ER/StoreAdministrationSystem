@@ -4,7 +4,7 @@ using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.DataAccess.Repositories.ProductCategories;
 using StoreAdministrationSystem.Domain.ProductCategories;
 
-namespace StoreAdministrationSystem.Application.Commands.ProductCategories;
+namespace StoreAdministrationSystem.Application.Commands.ProductCategories.CreateProductCategoryCommand;
 
 public sealed partial class CreateProductCategoryCommand
 {

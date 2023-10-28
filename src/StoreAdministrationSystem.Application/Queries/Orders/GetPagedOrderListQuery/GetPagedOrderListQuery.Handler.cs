@@ -3,7 +3,7 @@ using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.ReadModel;
 using StoreAdministrationSystem.ReadModel.Orders;
 
-namespace StoreAdministrationSystem.Application.Queries.Orders;
+namespace StoreAdministrationSystem.Application.Queries.Orders.GetPagedOrderListQuery;
 
 public sealed partial class GetPagedOrderListQuery
 {
@@ -35,10 +35,10 @@ public sealed partial class GetPagedOrderListQuery
             var total = await _modelQueryExecutor.CountAsync(query, cancellationToken);
 
             if (total == 0)
-                return Success(Page<Results.OrderReference>.Empty(request.Offset));
+                return Success(Page<OrderReference>.Empty(request.Offset));
 
             var resultQuery = from order in query
-                              select new Results.OrderReference
+                              select new OrderReference
                               {
                                   OrderId = order.OrderId,
                                   UserId = order.UserId,

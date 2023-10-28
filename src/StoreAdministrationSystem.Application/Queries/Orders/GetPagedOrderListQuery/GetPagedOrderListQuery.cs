@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Orders;
+namespace StoreAdministrationSystem.Application.Queries.Orders.GetPagedOrderListQuery;
 
 public sealed partial class GetPagedOrderListQuery : IQuery<
     GetPagedOrderListQuery.Results.SuccessResult,

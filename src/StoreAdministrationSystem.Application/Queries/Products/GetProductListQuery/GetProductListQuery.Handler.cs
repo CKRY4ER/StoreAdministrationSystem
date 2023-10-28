@@ -4,7 +4,7 @@ using StoreAdministrationSystem.ReadModel;
 using StoreAdministrationSystem.ReadModel.ProductCategories;
 using StoreAdministrationSystem.ReadModel.Products;
 
-namespace StoreAdministrationSystem.Application.Queries.Products;
+namespace StoreAdministrationSystem.Application.Queries.Products.GetProductListQuery;
 
 public sealed partial class GetProductListQuery
 {
@@ -30,7 +30,7 @@ public sealed partial class GetProductListQuery
         {
             var query = from p in _productModelProvider.Queryable
                            join pc in _productCategoryModelProvider.Queryable on p.ProductCategoryId equals pc.ProductCategoryId
-                           select new Results.ProductReference
+                           select new ProductReference
                            {
                                ProductId = p.ProductId,
                                ProductName = p.ProductName,

@@ -1,6 +1,6 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Orders;
+namespace StoreAdministrationSystem.Application.Queries.Orders.GetOrderByIdQuery;
 
 public sealed partial class GetOrderByIdQuery : IQuery<
     GetOrderByIdQuery.Results.SuccessResult,

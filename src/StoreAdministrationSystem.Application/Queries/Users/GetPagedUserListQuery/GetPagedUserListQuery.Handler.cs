@@ -3,7 +3,7 @@ using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.ReadModel;
 using StoreAdministrationSystem.ReadModel.Users;
 
-namespace StoreAdministrationSystem.Application.Queries.Users;
+namespace StoreAdministrationSystem.Application.Queries.Users.GetPagedUserListQuery;
 
 public sealed partial class GetPagedUserListQuery
 {
@@ -32,10 +32,10 @@ public sealed partial class GetPagedUserListQuery
             var total = await _modelQueryExecutor.CountAsync(query, cancellationToken);
 
             if (total == 0)
-                return Success(Page<Results.UserReference>.Empty(request.Offset));
+                return Success(Page<UserReference>.Empty(request.Offset));
 
             var resultQuery = from u in query
-                              select new Results.UserReference()
+                              select new UserReference()
                               {
                                   UserId = u.UserId,
                                   Login = u.Login,

@@ -4,7 +4,7 @@ using StoreAdministrationSystem.Application.Framework;
 using StoreAdministrationSystem.ReadModel;
 using StoreAdministrationSystem.ReadModel.ProductCategories;
 
-namespace StoreAdministrationSystem.Application.Queries.ProductCategories;
+namespace StoreAdministrationSystem.Application.Queries.ProductCategories.GetPagedProductCategoriesListQuery;
 
 public sealed partial class GetPagedProductCategoriesListQuery
 {
@@ -38,10 +38,10 @@ public sealed partial class GetPagedProductCategoriesListQuery
 
             var total = await _readModelQueryExecutor.CountAsync(query, cancellationToken);
             if (total == 0)
-                return Success(Page<Results.ProductCatogoryReference>.Empty(request.Offset));
+                return Success(Page<ProductCatogoryReference>.Empty(request.Offset));
 
             var resultQuery = from pc in query
-                              select new Results.ProductCatogoryReference
+                              select new ProductCatogoryReference
                               {
                                   ProductCategoryId = pc.ProductCategoryId,
                                   Name = pc.Name,

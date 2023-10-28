@@ -1,10 +1,10 @@
 ﻿using StoreAdministrationSystem.Application.Framework;
 
-namespace StoreAdministrationSystem.Application.Queries.Orders;
+namespace StoreAdministrationSystem.Application.Queries.Orders.GetOrderByIdQuery;
 
 public sealed partial class GetOrderByIdQuery
 {
-    private static Results.SuccessResult Success(Results.OrderReference order)
+    private static Results.SuccessResult Success(OrderByIdReference order)
         => new(order);
 
     private static Results.FailResult NotFound()
@@ -14,12 +14,12 @@ public sealed partial class GetOrderByIdQuery
     {
         public sealed class SuccessResult : ISuccessQueryResult
         {
-            public SuccessResult(OrderReference order)
+            public SuccessResult(OrderByIdReference order)
             {
                 Order = order;
             }
 
-            public OrderReference Order { get; init; } = null!;
+            public OrderByIdReference Order { get; init; } = null!;
         }
 
         public sealed class FailResult : IFailQueryResult
@@ -33,24 +33,24 @@ public sealed partial class GetOrderByIdQuery
             public string Code { get; init; } = null!;
             public string Message { get; init; } = null!;
         }
+    }
 
-        public sealed class OrderReference
-        {
-            public Guid OrderId { get; init; }
-            public Guid UserId { get; init; }
-            public string OrderStatus { get; init; } = null!;
-            public IEnumerable<OrderPositionReference> OrderPositions { get; init; } = null!;
-            public decimal TotalPrice { get; init; }
-            public DateTimeOffset CreateDate { get; init; }
-            public DateTimeOffset UpdateDate { get; init; }
-        }
+    public sealed class OrderByIdReference
+    {
+        public Guid OrderId { get; init; }
+        public Guid UserId { get; init; }
+        public string OrderStatus { get; init; } = null!;
+        public IEnumerable<OrderPositionReference> OrderPositions { get; init; } = null!;
+        public decimal TotalPrice { get; init; }
+        public DateTimeOffset CreateDate { get; init; }
+        public DateTimeOffset UpdateDate { get; init; }
+    }
 
-        public sealed class OrderPositionReference
-        {
-            public Guid ProductId { get; init; }
-            public string ProductName { get; init; } = null!;
-            public int Count { get; init; }
-            public decimal PositionPrice { get; init; }
-        }
-    } 
+    public sealed class OrderPositionReference
+    {
+        public Guid ProductId { get; init; }
+        public string ProductName { get; init; } = null!;
+        public int Count { get; init; }
+        public decimal PositionPrice { get; init; }
+    }
 }

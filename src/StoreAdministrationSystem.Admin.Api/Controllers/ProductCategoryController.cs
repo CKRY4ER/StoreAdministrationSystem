@@ -5,7 +5,7 @@ using StoreAdministrationSystem.Integration.Client.Models;
 namespace StoreAdministrationSystem.Admin.Api.Controllers;
 
 [ApiController]
-[Route("api/product-category")]
+[Route("api/product-categories")]
 public sealed class ProductCategoryController : ApiControllerBase
 {
     [HttpGet]
@@ -30,6 +30,7 @@ public sealed class ProductCategoryController : ApiControllerBase
 
     [HttpPost]
     [ProducesResponseType(200)]
+    [ProducesResponseType(409)]
     [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> CreateProductCategoryAsync(

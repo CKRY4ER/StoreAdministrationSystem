@@ -50,6 +50,9 @@ public sealed class ProductController : ApiControllerBase
     }
 
     [HttpPatch("{productId:guid}/update")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> UpdateProductAsync(
         [FromServices] IStoreAdministrationServiceClient client,

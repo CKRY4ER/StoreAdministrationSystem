@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreAdministrationSystem.Integration.Client;
 using StoreAdministrationSystem.Integration.Client.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace StoreAdministrationSystem.Admin.Api.Controllers;
 
@@ -14,10 +15,21 @@ public sealed class ProductController : ApiControllerBase
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetPagedProductListAsync(
         [FromServices] IStoreAdministrationServiceClient client,
-        GetPagedProductListRequest request,
+        [FromQuery] int offset = 0,
+        [FromQuery][Range(0, 100)] int count = 100,
+        [FromQuery] string? productName = null,
+        [FromQuery] Guid? productId = null,
+        [FromQuery] Guid? productCategoryId = null,
         CancellationToken cancellationToken = default)
     {
-        var response = await client.GetPagedProductListAsync(request, cancellationToken);
+        var response = await client.GetPagedProductListAsync(new()
+        {
+            Offset = offset,
+            Count = count,
+            ProductName = productName,
+            ProdcutId = productId,
+            ProductCategoryId = productCategoryId,
+        }, cancellationToken);
 
         if (response.IsSuccessStatusCode)
             return Ok(response.Content);
@@ -56,10 +68,11 @@ public sealed class ProductController : ApiControllerBase
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> UpdateProductAsync(
         [FromServices] IStoreAdministrationServiceClient client,
+        Guid productId,
         UpdateProductRequest request,
         CancellationToken cancellationToken = default)
     {
-        var response = await client.UpdateProductAsync(request, cancellationToken);
+        var response = await client.UpdateProductAsync(productId, request, cancellationToken);
 
         if (response.IsSuccessStatusCode)
             return Ok();

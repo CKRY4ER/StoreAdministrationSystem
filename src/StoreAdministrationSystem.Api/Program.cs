@@ -19,10 +19,10 @@ builder.Services.AddFramework();
 
 builder.Services.AddHttpLogging(options => { options.LoggingFields = HttpLoggingFields.All; });
 
-builder.Services.AddProblemDetails(options =>
-{
-    options.IncludeExceptionDetails = (_, _) => builder.Environment.IsDevelopment();
-});
+//builder.Services.AddProblemDetails(options =>
+//{
+//    options.IncludeExceptionDetails = (_, _) => builder.Environment.IsDevelopment();
+//});
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => 
@@ -47,7 +47,7 @@ app.UseSwaggerUI();
 
 app.UseRouting();
 
-app.UseProblemDetails();
+//app.UseProblemDetails();
 
 app.MapControllers();
 

@@ -8,7 +8,7 @@ public sealed class Product : Aggregate
 
     public Product(string productName,
         string description, decimal price, Uri productPictureUri,
-        IDictionary<string, string> parameters, ProductCategory productCategory)
+        Dictionary<string, string> parameters, ProductCategory productCategory)
             : base(Guid.NewGuid())
     {
         ProductName = productName;
@@ -26,14 +26,14 @@ public sealed class Product : Aggregate
     public decimal Price { get; private set; }
     public int Count { get; private set; }
     public Uri ProductPictureUrl { get; private set; } = null!;
-    public IDictionary<string, string> Parameters { get; private set; } = null!;
+    public Dictionary<string, string> Parameters { get; private set; } = null!;
     public ProductCategory ProductCategory { get; private set; } = null!;
     public DateTimeOffset CreateDate { get; private set; }
     public DateTimeOffset UpdateDate { get; private set; }
 
     public void UpdateInformation(string productName,
         string description, decimal price, Uri productPictureUri,
-        IDictionary<string, string> parameters, ProductCategory productCategory)
+        Dictionary<string, string> parameters, ProductCategory productCategory)
     {
         ProductName = productName;
         Description = description;

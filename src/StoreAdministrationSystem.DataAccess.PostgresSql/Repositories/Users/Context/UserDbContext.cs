@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.ProductCategories.Context.Configurations;
+using StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.Products.Context.Configurations;
 using StoreAdministrationSystem.DataAccess.PostgresSql.Repositories.Users.Context.Configurations;
 using StoreAdministrationSystem.Domain.Users;
 
@@ -16,6 +18,10 @@ public sealed class UserDbContext : DbContext
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new UserDocumentConfiguration());
         modelBuilder.ApplyConfiguration(new UserSchoppingCartPositionConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductCategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductConfiguration());
+
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         base.OnModelCreating(modelBuilder);
     }

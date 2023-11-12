@@ -1,5 +1,163 @@
-﻿<h3>UserList</h3>
+﻿@page "/users"
+@using StoreAdministrationSystem.Admin.Client.Conmponents
+@using StoreAdministrationSystem.Admin.Client.Extensions;
+@using StoreAdministrationSystem.Admin.Client.Services.Exceptions;
+@using StoreAdministrationSystem.Admin.Client.Services;
+
+@implements IDisposable
+
+@inject ISnackbar Snackbar
+@inject IStoreAdministrationSystemService Service
+@inject IDialogService DialogService
+
+<PageTitle>Users</PageTitle>
+
+<MudBreadcrumbs Items="_breadcrumbsItems"/>
+
+<MudTable ServerData="@(new Func<TableState, Task<TableData<UserModel>>>(OnLoadItemsAsync))"
+          Dense="true"
+          Hover="true"
+          Bordered="true"
+          Striped="true"
+          Virtualize="true"
+          FixedHeader="true"
+          Loading="@_loading"
+          LoadingProgressColor="Color.Info"
+          @ref="_table">
+    <ToolBarContent>
+        <IconButton Icon="@Icons.Material.Filled.Add" Tooltip="Создать администратора" OnClick="ShowCreateAdminAsync"></IconButton>
+        <MudTooltip Delay="600" Text="Перезагрузить список">
+            <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="ReloadItemsAsync" />
+        </MudTooltip>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(SearchOnId)" Placeholder="Поиск по Id" Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+        </MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Ид</MudTh>
+        <MudTh>Почта</MudTh>
+        <MudTh>Логин</MudTh>
+        <MudTh>Администратор</MudTh>
+        <MudTh>Дата создания</MudTh>
+        <MudTh>Дата обновления</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="ID">
+            <MudLink Href="@($"users/{context.UserId}")">
+                @context.UserId.ToDisplay();
+            </MudLink>
+        </MudTd>
+        <MudTd DataLabel="Email">
+            @context.Email
+        </MudTd>
+        <MudTd DataLabel="Login">
+            @context.Login
+        </MudTd>
+        <MudTd DataLabel="IsAdmin" Style="display:flex;justify-content:center;">
+            <MudCheckBox @bind-Checked="@context.IsAdmin" ReadOnly="true"/>
+        </MudTd>
+        <MudTd DataLabel="CreatedOn" Style="text-align:right">@context.CreateDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</MudTd>
+        <MudTd DataLabel="UpdatedOn" Style="text-align:right">@context.UpdateDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>Совпадающих записей не найдено</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Загрузка...</MudText>
+    </LoadingContent>
+</MudTable>
+
 
 @code {
 
+    private readonly List<BreadcrumbItem> _breadcrumbsItems = new()
+    {
+        new BreadcrumbItem("ГЛАВНАЯ", href: "#", icon: Icons.Material.Filled.Home),
+        new BreadcrumbItem("ПОЛЬЗОВАТЕЛИ", href: "/users", icon: Icons.Material.Filled.AccountTree, disabled: true),
+    };
+
+    private MudTable<UserModel> _table = null!;
+    private bool _loading = true;
+    private Guid _userId = default;
+
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
+
+    private async Task<TableData<UserModel>> OnLoadItemsAsync(TableState state)
+    {
+        _loading = true;
+
+        try
+        {
+            var userList = await Service.GetPagedUserListAsync(new()
+            {
+                Offset = state.Page*state.PageSize,
+                Count = state.PageSize,
+                UserId = _userId == default ? null : _userId
+            }, _cancellationTokenSource.Token);
+
+            return new TableData<UserModel>
+            {
+                TotalItems = userList.Total,
+                Items = userList.Values.Select(u => new UserModel
+                {
+                    UserId = u.UserId,
+                    Email = u.Email,
+                    Login = u.Login,
+                    IsAdmin = u.IsAdmin,
+                    CreateDate = u.CreateDate,
+                    UpdateDate = u.UpdateDate
+                })
+            };
+        }
+        catch (ServerException ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error, options => { options.CloseAfterNavigation = true; });
+        }
+        finally
+        {
+            _loading = false;
+        }
+
+        return new TableData<UserModel>
+        {
+            TotalItems = 0,
+            Items = Array.Empty<UserModel>()
+        };
+    }
+
+    private async Task SearchOnId(string guid)
+    {
+        if (Guid.TryParse(guid, out _userId) is true)
+        {
+            await ReloadItemsAsync();
+        }
+
+        Snackbar.Add("Значение должно быть типа GUID", Severity.Warning, options => { options.CloseAfterNavigation = true; });
+    }
+
+    private Task ReloadItemsAsync() => _table.ReloadServerData();
+
+    private async Task ShowCreateAdminAsync()
+    {
+        
+    }
+
+    public void Dispose()
+    {
+    }
+
+    #region Models
+
+    public sealed class UserModel
+    {
+        public Guid UserId { get; set; }
+        public string Email { get; set; } = null!;
+        public string Login { get; set; } = null!;
+        public bool IsAdmin { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
+    }
+
+    #endregion
 }

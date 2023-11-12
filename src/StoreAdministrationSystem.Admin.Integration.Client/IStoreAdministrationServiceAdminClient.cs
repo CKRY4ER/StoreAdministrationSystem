@@ -27,7 +27,7 @@ public interface IStoreAdministrationServiceAdminClient
     /// 404 - заказ не найден
     /// 500 - ошибка
     /// </returns>
-    [Get("/api/orders/{userId}")]
+    [Get("/api/orders/{orderId}")]
     Task<ApiResponse<GetOrderByIdResponse>> GetOrderByIdAsync(Guid orderId, CancellationToken cancellationToken = default);
 
     #endregion
@@ -111,11 +111,11 @@ public interface IStoreAdministrationServiceAdminClient
     /// <param name="cancellationToken"></param>
     /// <returns>
     /// 200 - успех
-    /// 409 - продукт не найден
+    /// 409 - продукт уже существует
     /// 500 - ошибка
     /// </returns>
     [Patch("/api/products/{productId}/update")]
-    Task<IApiResponse> UpdateProductAsync(UpdateProductRequest request, CancellationToken cancellationToken);
+    Task<IApiResponse> UpdateProductAsync(Guid productId, UpdateProductRequest request, CancellationToken cancellationToken);
 
     #endregion
 

@@ -12,8 +12,8 @@ using StoreAdministrationSystem.DataAccess.PostgresSql.Migrator.Context;
 namespace StoreAdministrationSystem.DataAccess.PostgresSql.Migrations
 {
     [DbContext(typeof(MigratorDbContext))]
-    [Migration("20231017035939_init")]
-    partial class init
+    [Migration("20231105123424_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

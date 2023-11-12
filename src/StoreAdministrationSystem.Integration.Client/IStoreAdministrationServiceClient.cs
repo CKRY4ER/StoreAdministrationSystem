@@ -14,7 +14,7 @@ public interface IStoreAdministrationServiceClient
     /// 500 - ошибка
     /// </returns>
     [Get("/api/orders")]
-    Task<ApiResponse<PageResponse<GetPagedOrderListResponse>>> GetPagedOrderListAsync(GetPagedOrderListRequest request, CancellationToken cancellationToken);
+    Task<ApiResponse<PageResponse<GetPagedOrderListResponse>>> GetPagedOrderListAsync([Query] GetPagedOrderListRequest request, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получение заказа по ID
@@ -109,7 +109,7 @@ public interface IStoreAdministrationServiceClient
     /// 500 - ошибка
     /// </returns>
     [Patch("/api/products/{productId}/update")]
-    Task<IApiResponse> UpdateProductAsync(UpdateProductRequest request, CancellationToken cancellationToken);
+    Task<IApiResponse> UpdateProductAsync(Guid productId, UpdateProductRequest request, CancellationToken cancellationToken);
 
     #endregion
 

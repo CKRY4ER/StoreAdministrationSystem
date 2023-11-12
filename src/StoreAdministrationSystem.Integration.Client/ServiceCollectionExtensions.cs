@@ -9,7 +9,7 @@ public static class ServiceCollectionExtensions
     {
         collection.AddRefitClient<IStoreAdministrationServiceClient>().ConfigureHttpClient((client) =>
         {
-            client.BaseAddress = new Uri(options.Adress);
+            client.BaseAddress = new Uri(options.Address);
         });
     }
 }

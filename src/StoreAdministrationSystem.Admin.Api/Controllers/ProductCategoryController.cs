@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreAdministrationSystem.Integration.Client;
 using StoreAdministrationSystem.Integration.Client.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace StoreAdministrationSystem.Admin.Api.Controllers;
 
@@ -14,10 +15,19 @@ public sealed class ProductCategoryController : ApiControllerBase
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetPagedProductCategoriesListAsync(
         [FromServices] IStoreAdministrationServiceClient client,
-        GetPagedProductCategoriesListRequest request,
+        [FromQuery] int offset = 0,
+        [FromQuery][Range(0, 100)] int count = 100,
+        [FromQuery] string? name = null,
+        [FromQuery] Guid? productCategoryId = null,
         CancellationToken cancellationToken = default)
     {
-        var response = await client.GetPagedProductCategoriesListAsync(request, cancellationToken);
+        var response = await client.GetPagedProductCategoriesListAsync(new()
+        {
+            Offset = offset,
+            Count = count,
+            Name = name,
+            ProductCategoryId = productCategoryId
+        }, cancellationToken);
 
         if (response.IsSuccessStatusCode)
             return Ok(response.Content);

@@ -2,5 +2,5 @@
 
 public sealed class HttpStoreAdministrationServiceAdminClientOptions
 {
-    public string Adress { get; init; } = null!;
+    public string Address { get; init; } = null!;
 }

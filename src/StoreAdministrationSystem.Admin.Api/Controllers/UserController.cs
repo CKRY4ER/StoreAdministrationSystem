@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreAdministrationSystem.Integration.Client;
 using StoreAdministrationSystem.Integration.Client.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace StoreAdministrationSystem.Admin.Api.Controllers;
 
@@ -14,10 +15,17 @@ public sealed class UserController : ApiControllerBase
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetPagedUserListAsync(
         [FromServices] IStoreAdministrationServiceClient client,
-        GetPagedUserListRequest request,
+        [FromQuery] int offset = 0,
+        [FromQuery][Range(0, 100)] int count = 100,
+        [FromQuery] Guid? userId = null,
         CancellationToken cancellation = default)
     {
-        var response = await client.GetPagedUserListAsync(request, cancellation);
+        var response = await client.GetPagedUserListAsync(new()
+        {
+            Offset = offset,
+            Count = count,
+            UserId = userId
+        }, cancellation);
 
         if (response.IsSuccessStatusCode)
             return Ok(response.Content);

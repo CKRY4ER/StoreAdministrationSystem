@@ -6,6 +6,8 @@ services:
     image: store-administration-system-admin-api
     environment:
       Integrations:StoreAdministrationSystem:Address: http://store-administration-system-api
+      Cors:Name: SpecificOrigins
+      Cors:Origins:0: https://localhost:5001
       Serilog:Filter:0:Name: ByExcluding
       Serilog:Filter:0:Args:expression: RequestPath like '/swagger%'
       Serilog:Filter:1:Name: ByExcluding

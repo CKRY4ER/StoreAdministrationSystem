@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreAdministrationSystem.Integration.Client;
 using StoreAdministrationSystem.Integration.Client.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace StoreAdministrationSystem.Admin.Api.Controllers;
 
@@ -14,10 +15,19 @@ public sealed class OrderController : ApiControllerBase
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> GetPagedOrderListAsync(
         [FromServices] IStoreAdministrationServiceClient client,
-        GetPagedOrderListRequest request,
+        [FromQuery] int offset = 0,
+        [FromQuery][Range(0, 100)] int count = 100,
+        [FromQuery] Guid? orderId = null,
+        [FromQuery] Guid? userId = null,
         CancellationToken cancellationToken = default)
     {
-        var response = await client.GetPagedOrderListAsync(request, cancellationToken);
+        var response = await client.GetPagedOrderListAsync(new()
+        {
+            Offset = offset,
+            Count = count,
+            OrderId = orderId,
+            UserId = userId
+        }, cancellationToken);
 
         if (response.IsSuccessStatusCode)
             return Ok(response.Content);

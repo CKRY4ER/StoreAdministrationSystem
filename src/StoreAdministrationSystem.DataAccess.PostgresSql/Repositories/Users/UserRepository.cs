@@ -22,7 +22,7 @@ public sealed class UserRepository : IUserRepository
             .FirstOrDefaultAsync(u => u.AggregateId == userId, cancellationToken);
 
     public async Task<User?> GetByLoginAsync(string login, CancellationToken cancellationToken)
-        => await _context.Users.AsSingleQuery()
+        => await _context.Users.AsSplitQuery()
         .FirstOrDefaultAsync(u => u.Login.ToLower() == login.ToLower());
 
     public async Task SaveAsync(User aggregate, CancellationToken cancellationToken)

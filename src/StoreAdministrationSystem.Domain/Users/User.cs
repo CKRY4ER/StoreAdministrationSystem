@@ -15,6 +15,8 @@ public sealed class User : Aggregate
         Login = login;
         Password = password;
         IsAdmin = isAdmin;
+        CreateDate = DateTimeOffset.Now;
+        UpdateDate = DateTimeOffset.Now;
     }
 
     public string Email { get; private set; } = null!;

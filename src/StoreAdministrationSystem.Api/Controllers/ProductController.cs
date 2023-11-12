@@ -9,6 +9,7 @@ using StoreAdministrationSystem.Application.Queries.Products;
 using StoreAdministrationSystem.Application.Queries.Products.GetPagedProductListQuery;
 using StoreAdministrationSystem.Application.Queries.Products.GetProductListQuery;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 
 namespace StoreAdministrationSystem.Api.Controllers;
 
@@ -112,6 +113,7 @@ public sealed class ProductController : ApiControllerBase
     [ProducesErrorResponseType(typeof(ProblemDetails))]
     public async Task<IActionResult> UpdateProductAsync(
         [FromServices] ICommandExecutor commandExecutor,
+        Guid productId,
         [FromBody] UpdateProductModel model,
         CancellationToken cancellationToken = default)
     {
@@ -120,7 +122,7 @@ public sealed class ProductController : ApiControllerBase
             UpdateProductCommand.Results.SuccessResult,
             UpdateProductCommand.Results.FailResult>(new()
             {
-                ProductId = model.ProductId,
+                ProductId = productId,
                 ProductCategoryId = model.ProductCategoryId,
                 ProductName = model.ProductName,
                 Description = model.Description,
@@ -154,7 +156,6 @@ public sealed class ProductController : ApiControllerBase
 
     public sealed class UpdateProductModel
     {
-        public Guid ProductId { get; init; }
         public string ProductName { get; init; } = null!;
         public string Description { get; init; } = null!;
         public decimal Price { get; init; }

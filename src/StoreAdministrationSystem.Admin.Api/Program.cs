@@ -8,7 +8,7 @@ using StoreAdministrationSystem.Admin.Api;
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddStorerAdministrationServiceRefitClient(builder.Configuration.GetSection("Integrations:KycService")
+builder.Services.AddStorerAdministrationServiceRefitClient(builder.Configuration.GetSection("Integrations:StoreAdministrationSystem")
     .Get<HttpStoreAdministrationServiceClientOptions>()!);
 
 builder.Services.AddHttpLogging(options => options.LoggingFields = HttpLoggingFields.All);

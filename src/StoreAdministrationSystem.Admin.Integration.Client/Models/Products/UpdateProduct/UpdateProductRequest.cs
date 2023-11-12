@@ -2,7 +2,6 @@
 
 public sealed class UpdateProductRequest
 {
-    public Guid ProductId { get; init; }
     public string ProductName { get; init; } = null!;
     public string Description { get; init; } = null!;
     public decimal Price { get; init; }
